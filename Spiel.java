@@ -6,27 +6,26 @@ import java.awt.image.BufferStrategy;
 // Erbt von Canvas - Wird im Fenster als Canvas eingefügt, worüber dann auch das Zeichnen erfolgt
 // Implementiert Runnable, damit wird ein separater Thread erzeugt, der die Game-Loop ausführt
 
-public class Spiel extends Canvas implements Runnable{
+public class Spiel extends Canvas implements Runnable {
     public static void main(String[] args) {
         // Beim Start wird diese Methode automatisch ausgeführt,
-        // kreiert ein Spiel Objekt, welches im Konstruktor
-        // ein Fenster kreiert, welches das Spiel dann startet
+        //  kreiert ein Spiel Objekt, welches im Konstruktor
+        //  ein Fenster kreiert, welches das Spiel dann startet
         new Spiel();
     }
 
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
-    int level;
-    int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
+    private Status status;
+    private int level;
+    private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
     private Anzeige anzeige;
 
-    private Fenster fenster;   // Referenz auf das Fenster, in dem das Spiel läuft
-
     public Spiel() {
         laufend = false;
-
+        status = Status.InGame;
         level = 1;
         fps = 0;
 
@@ -34,7 +33,7 @@ public class Spiel extends Canvas implements Runnable{
 
         addKeyListener(new TastenModul(this));   // Ein Tastenmodul wird als KeyListener hinzugefügt
 
-        fenster = new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
+        new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
 
 
@@ -68,10 +67,12 @@ public class Spiel extends Canvas implements Runnable{
     }
 
 
+    public Status getStatus() { return status; }
+    public int getLevel() { return level; }
     public int getFPS() { return fps; }
 
 
-    // Beendet das ganze Programm - Hier wird später das speichern von Dateien stattfinden
+    // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden
     public void beenden() {
         System.exit(0);
     }
@@ -135,5 +136,5 @@ public class Spiel extends Canvas implements Runnable{
     }
 
     // Unwichtig und unbenutzt - Unterdrückt ledeglich eine Warnung aus der Canvas-Klasse
-    private static final long serialVerionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }
