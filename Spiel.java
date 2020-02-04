@@ -17,14 +17,22 @@ public class Spiel extends Canvas implements Runnable{
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
+    int level;
     int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
+
+    private Anzeige anzeige;
 
     private Fenster fenster;   // Referenz auf das Fenster, in dem das Spiel läuft
 
     public Spiel() {
         laufend = false;
 
+        level = 1;
         fps = 0;
+
+        anzeige = new Anzeige(this);
+
+        addKeyListener(new TastenModul(this));   // Ein Tastenmodul wird als KeyListener hinzugefügt
 
         fenster = new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
@@ -49,12 +57,31 @@ public class Spiel extends Canvas implements Runnable{
         gfx.setColor(Color.BLACK);
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+        // Hier alles zeichnen
+
+        anzeige.render(gfx, new Vek2(this.getSize()));
+
 
         // Grafik-Objekt wird entsorgt und Frame wird angezeigt
         gfx.dispose();
         buffer.show();
     }
 
+
+    public int getFPS() { return fps; }
+
+
+    // Beendet das ganze Programm - Hier wird später das speichern von Dateien stattfinden
+    public void beenden() {
+        System.exit(0);
+    }
+
+
+    public enum Status {
+        InGame,
+        Pausiert,
+        HauptMenu;
+    }
 
 
     // Erzeugt und startet den Thread, in dem die Game-Loop läuft
