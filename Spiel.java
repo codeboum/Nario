@@ -1,25 +1,28 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 
 public class Spiel extends Canvas implements Runnable{
     public static void main(String[] args) {
-        System.out.println("*Mario Voice* - Here we go!");
+        // Beim Start wird diese Methode automatisch ausgeführt,
+        // kreiert ein Spiel Objekt, welches im Konstruktor
+        // ein Fenster kreiert, welches das Spiel dann startet
         new Spiel();
     }
 
-    private Thread thread;
-    private boolean laufend;
+    private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
+    private boolean laufend;   // ob der Thread läuft
 
-    int fps = 0;
+    int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
-    private Fenster fenster;
+    private Fenster fenster;   // Referenz auf das Fenster, in dem das Spiel läuft
 
     public Spiel() {
         laufend = false;
 
-        fenster = new Fenster(this);
+        fps = 0;
+
+        fenster = new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
 
 
@@ -28,29 +31,35 @@ public class Spiel extends Canvas implements Runnable{
     }
 
     public void render() {
+        // Buffer-Kontext und Grafik-Objekt wird geholt
         BufferStrategy buffer = this.getBufferStrategy();
-        if (buffer == null) {
+        if (buffer == null) {   // Falls es noch keinen gibt (Beim ersten Frame wird er kreiert)
             this.createBufferStrategy(3);
             return;
         }
+        Graphics gfx = buffer.getDrawGraphics();   // Durch das Grafik-Objekt werden alle Zeichenkommandos aufgeführt
 
-        Graphics gfx = buffer.getDrawGraphics();
-
+        // Schwarzen Hintergrund zeichnen
         gfx.setColor(Color.BLACK);
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 
+        // Grafik-Objekt wird entsorgt und Frame wird angezeigt
         gfx.dispose();
         buffer.show();
     }
 
 
+
+    // Erzeugt und startet den Thread, in dem die Game-Loop läuft
     public synchronized void starten() {
         thread = new Thread(this);
         thread.start();
         laufend = true;
     }
 
+    // Beendet den Thread
+    // Normalerweise wird das Programm einfach geschlossen, wodurch der Thread automatisch entsorgt wird
     public synchronized void anhalten() {
         try {
             thread.join();
@@ -60,6 +69,10 @@ public class Spiel extends Canvas implements Runnable{
         }
     }
 
+    // Diese Methode beinhaltet die Game-Loop
+    // Sie wird beim Starten des Thread automatisch ausgeführt
+    // Die Game-Loop ruft 60x pro Sekunde (definiert als tickAnzahl) tick() und render() auf,
+    //  und berechnet einmal pro Sekunde die Bildrate (fps)
     public void run() {
         requestFocus();
         long letztZeit = System.nanoTime();
@@ -88,7 +101,6 @@ public class Spiel extends Canvas implements Runnable{
         anhalten();
     }
 
-
-    // Unwichtig - Unterdruckt ledeglich eine Warnung
+    // Unwichtig und unbenutzt - Unterdrückt ledeglich eine Warnung aus der Canvas-Klasse
     private static final long serialVerionUID = 1L;
 }
