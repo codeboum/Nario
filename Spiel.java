@@ -2,6 +2,10 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 
+// Verwaltet alle zentralen Spielprozesse wie bsp. Game-Loop, Zeichnen
+// Erbt von Canvas - Wird im Fenster als Canvas eingefügt, worüber dann auch das Zeichnen erfolgt
+// Implementiert Runnable, damit wird ein separater Thread erzeugt, der die Game-Loop ausführt
+
 public class Spiel extends Canvas implements Runnable{
     public static void main(String[] args) {
         // Beim Start wird diese Methode automatisch ausgeführt,
@@ -26,10 +30,12 @@ public class Spiel extends Canvas implements Runnable{
     }
 
 
+    // Hier werden Logikupdates ausgeführt
     public void tick() {
 
     }
 
+    // Hier wird die Zeichenfläche bearbeitet bzw bemalt
     public void render() {
         // Buffer-Kontext und Grafik-Objekt wird geholt
         BufferStrategy buffer = this.getBufferStrategy();
