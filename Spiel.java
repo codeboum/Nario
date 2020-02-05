@@ -18,20 +18,25 @@ public class Spiel extends Canvas implements Runnable {
     private boolean laufend;   // ob der Thread läuft
 
     private Status status;
+    private boolean debug;
     private int level;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
+    private Leiste leiste;
     private Anzeige anzeige;
 
     public Spiel() {
         laufend = false;
         status = Status.InGame;
+        debug = true;
         level = 1;
         fps = 0;
 
+        leiste = new Leiste(this);
         anzeige = new Anzeige(this);
 
-        addKeyListener(new TastenModul(this));   // Ein Tastenmodul wird als KeyListener hinzugefügt
+        addKeyListener(new TastenModul(this));   // Ein TastenModul wird als KeyListener hinzugefügt
+        addMouseListener(new MausModul(this));   // Ein MausModul wird als MouseListener hinzugefügt
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
@@ -58,7 +63,8 @@ public class Spiel extends Canvas implements Runnable {
 
         // Hier alles zeichnen
 
-        anzeige.render(gfx, new Vek2(this.getSize()));
+        anzeige.render(gfx, gibDim());
+        leiste.render(gfx);
 
 
         // Grafik-Objekt wird entsorgt und Frame wird angezeigt
@@ -67,9 +73,11 @@ public class Spiel extends Canvas implements Runnable {
     }
 
 
-    public Status getStatus() { return status; }
-    public int getLevel() { return level; }
-    public int getFPS() { return fps; }
+    public Status gibStatus() { return status; }
+    public boolean debugAktiv() { return debug; }
+    public int gibLevel() { return level; }
+    public int gibFPS() { return fps; }
+    public Vek2 gibDim() { return new Vek2(this.getSize()); }
 
 
     // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden

@@ -18,8 +18,8 @@ public abstract class SpielObjekt {
 	public abstract void tick();
 	public abstract void render(Graphics gfx);
 
-	public void setPos(Vek2 pos) { this.pos = pos; }
-	public Vek2 getPos() { return pos; }
-	public void setV(Vek2 v) { this.v = v; }
-	public Vek2 getV() { return v; }
+	public void setzPos(Vek2 pos) { this.pos = pos; }
+	public Vek2 gibPos() { return pos; }
+	public void setzV(Vek2 v) { this.v = v; }
+	public Vek2 gibV() { return v; }
 }

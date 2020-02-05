@@ -24,11 +24,11 @@ public class Vek2 {
 	public Vek2 mult(Vek2 v)        { return new Vek2(x*v.x, y*v.y); }
 	public Vek2 mult(double n)      { return new Vek2(x*n, y*n); }
 
-	public double getLaenge()       { return Math.sqrt(getLaengeSq()); }
-	public double getLaengeSq()     { return x*x + y*y; }
+	public double gibLaenge()       { return Math.sqrt(gibLaenge2()); }
+	public double gibLaenge2()      { return x*x + y*y; }
 
-	public Vek2 getNorm() {
-		double l = getLaenge();
+	public Vek2 gibNorm() {
+		double l = gibLaenge();
 		if (l > 0.0) {
 			return this.mult(1.0/l);
 		}

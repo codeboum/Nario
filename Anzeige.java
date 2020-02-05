@@ -11,22 +11,22 @@ public class Anzeige extends Design {
 		this.spiel = spiel;
 	}
 
-	public void render(Graphics gfx, Vek2 bild) {
-		int x = bild.ix();
-		int y = bild.iy();
+	public void render(Graphics gfx, Vek2 dim) {
+		int x = dim.ix();
+		int y = dim.iy();
 
 		gfx.setColor(WEISS);
 		gfx.setFont(TEXT36);
 		gfx.drawString("Mit ESC beenden", 100, 100);
 
-		// Untere Anzeige - FPS, Level
+		if (!spiel.debugAktiv()) return;
+		// Debug Anzeige - FPS, Level
 		gfx.setFont(TEXT14);
 		gfx.drawString("FPS", 5, y-25);
 		gfx.drawString("Level", 55, y-25);
-		gfx.setColor(GELB);
+		gfx.setColor(DEBUG);
 		gfx.setFont(TEXT18);
-		gfx.drawString(spiel.getFPS()+"", 5, y-5);
-		gfx.setColor(FARBE);
-		gfx.drawString(spiel.getLevel()+"", 55, y-5);
+		gfx.drawString(spiel.gibFPS()+"", 5, y-5);
+		gfx.drawString(spiel.gibLevel()+"", 55, y-5);
 	}
 }
