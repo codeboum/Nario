@@ -23,5 +23,10 @@ public class Leiste {
 		String titel = Design.TITEL;
 		titel += (spiel.debugAktiv()) ? " - DEBUG" : "";
 		gfx.drawString(titel, 5, 22);
+
+		gfx.setColor(Design.ROT);
+		gfx.fillRect(dim.ix()-25, 5, 20, 20);
+		gfx.setColor(Design.WEISS);
+		gfx.drawRect(dim.ix()-25, 5, 19, 19);
 	}
 }

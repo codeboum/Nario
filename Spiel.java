@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.nio.file.Paths;
 
 
 // Verwaltet alle zentralen Spielprozesse wie bsp. Game-Loop, Zeichnen
@@ -22,6 +23,8 @@ public class Spiel extends Canvas implements Runnable {
     private int level;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
+    private DateiModul dateiModul;
+
     private Leiste leiste;
     private Anzeige anzeige;
 
@@ -31,6 +34,8 @@ public class Spiel extends Canvas implements Runnable {
         debug = true;
         level = 1;
         fps = 0;
+
+        dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
 
         leiste = new Leiste(this);
         anzeige = new Anzeige(this);
@@ -78,6 +83,7 @@ public class Spiel extends Canvas implements Runnable {
     public int gibLevel() { return level; }
     public int gibFPS() { return fps; }
     public Vek2 gibDim() { return new Vek2(this.getSize()); }
+    public DateiModul gibDateiModul() { return dateiModul; }
 
 
     // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden
@@ -89,7 +95,8 @@ public class Spiel extends Canvas implements Runnable {
     public enum Status {
         InGame,
         Pausiert,
-        HauptMenu;
+        HauptMenu,
+        AdminLogin;
     }
 
 

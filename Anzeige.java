@@ -15,12 +15,9 @@ public class Anzeige extends Design {
 		int x = dim.ix();
 		int y = dim.iy();
 
-		gfx.setColor(WEISS);
-		gfx.setFont(TEXT36);
-		gfx.drawString("Mit ESC beenden", 100, 100);
-
 		if (!spiel.debugAktiv()) return;
 		// Debug Anzeige - FPS, Level
+		gfx.setColor(WEISS);
 		gfx.setFont(TEXT14);
 		gfx.drawString("FPS", 5, y-25);
 		gfx.drawString("Level", 55, y-25);

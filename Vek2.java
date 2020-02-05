@@ -34,4 +34,11 @@ public class Vek2 {
 		}
 		return this;
 	}
+
+	// Testet, ob ein Punkt eine Fläche schneidet - wird zB benutzt um Mausposition auf Flächen zu testen
+	// pos - Position der Fläche (obere linke Ecke)
+	// dim - Dimension der Fläche
+	public boolean auf(Vek2 pos, Vek2 dim) {
+		return x >= pos.x && x < pos.x + dim.x && y >= pos.y && y < pos.y + dim.y;
+	}
 }

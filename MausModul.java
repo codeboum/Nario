@@ -19,20 +19,18 @@ public class MausModul extends MouseAdapter {
 
 		if (spiel.debugAktiv()) System.out.println("Maustaste " + taste + " betaetigt");
 
-		/*
-		if (btn == MouseEvent.BUTTON1) {
-			// Linksklick
+		// Linksklick
+		if (taste == MouseEvent.BUTTON1) {
+			// Schliess-Button (Leiste)
+			if (mpos.auf(new Vek2(dim.ix()-25, 5), new Vek2(20, 20))) {
+				spiel.beenden();
+				return;
+			}
 		}
-		else if (btn == MouseEvent.BUTTON3) {
+		/*
+		else if (taste == MouseEvent.BUTTON3) {
 			// Rechtsklick
 		}
 		*/
-	}
-
-	// Private Methode, die testet ob ein Punkt eine Fläche schneidet - benutzt um Mausposition auf Flächen zu testen
-	// pos - Position der Fläche (obere linke Ecke)
-	// dim - Dimension der Fläche
-	private boolean schneidet(Vek2 maus, Vek2 pos, Vek2 dim) {
-		return maus.x > pos.x && maus.x < pos.x + dim.x && maus.y > pos.y && maus.y < pos.y + dim.y;
 	}
 }
