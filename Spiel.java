@@ -23,18 +23,24 @@ public class Spiel extends Canvas implements Runnable {
     private int level;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
+    private ObjektManager objekte;
     private DateiModul dateiModul;
 
     private Leiste leiste;
     private Anzeige anzeige;
 
     public Spiel() {
+        BildLader bildLader = new BildLader(); try {
+            // Hier Sprites laden
+        } catch(Exception e) { e.printStackTrace(); }
+
         laufend = false;
         status = Status.InGame;
         debug = true;
         level = 1;
         fps = 0;
 
+        objekte = new ObjektManager();
         dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
 
         leiste = new Leiste(this);
@@ -42,6 +48,13 @@ public class Spiel extends Canvas implements Runnable {
 
         addKeyListener(new TastenModul(this));   // Ein TastenModul wird als KeyListener hinzugefügt
         addMouseListener(new MausModul(this));   // Ein MausModul wird als MouseListener hinzugefügt
+
+
+        // Hier SpielObjekte hinzufügen
+        Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
+        Vek2 bildschirm = new Vek2(b);
+        objekte.adden(new Spieler(this, bildschirm));
+
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
@@ -67,7 +80,7 @@ public class Spiel extends Canvas implements Runnable {
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
         // Hier alles zeichnen
-
+        objekte.render(gfx);
         anzeige.render(gfx, gibDim());
         leiste.render(gfx);
 
