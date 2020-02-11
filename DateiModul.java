@@ -11,7 +11,7 @@ public class DateiModul {
 	private String hauptPfad;   // Der Ordner, in dem alle Dateien gespeichert werden
 
 	public DateiModul(Path hauptPfad) {
-		this.hauptPfad = hauptPfad.toString() + "\\Saves\\";
+		this.hauptPfad = hauptPfad.toString() + "\\saves\\";
 	}
 
 	public boolean speichern(String pfad, String daten) {

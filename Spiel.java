@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.nio.file.Paths;
 
 
@@ -29,10 +30,13 @@ public class Spiel extends Canvas implements Runnable {
     private Leiste leiste;
     private Anzeige anzeige;
 
+    BufferedImage s;
+
     public Spiel() {
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
-        } catch(Exception e) { e.printStackTrace(); }
+            s = bildLader.laden("\\res\\Nario.png");
+        } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
         status = Status.InGame;
@@ -53,7 +57,7 @@ public class Spiel extends Canvas implements Runnable {
         // Hier SpielObjekte hinzufügen
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
-        objekte.adden(new Spieler(this, bildschirm));
+        objekte.adden(new Spieler(this, bildschirm, s));
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
