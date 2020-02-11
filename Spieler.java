@@ -17,6 +17,6 @@ public class Spieler extends SpielObjekt {
     }
 
     public void render(Graphics gfx) {
-        gfx.drawImage(bild, pos.ix(), pos.iy(), spiel);
+        gfx.drawImage(bild, pos.ix(), pos.iy(), null);
     }
 }

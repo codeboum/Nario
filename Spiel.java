@@ -140,7 +140,7 @@ public class Spiel extends Canvas implements Runnable {
     // Die Game-Loop ruft 60x pro Sekunde (definiert als tickAnzahl) tick() und render() auf,
     //  und berechnet einmal pro Sekunde die Bildrate (fps)
     public void run() {
-        requestFocus();
+        this.requestFocus();
         long letztZeit = System.nanoTime();
         double tickAnzahl = 60.0;
         double ns = 1000000000 / tickAnzahl;
