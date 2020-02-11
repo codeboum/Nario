@@ -1,15 +1,12 @@
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 
 public class Spieler extends SpielObjekt {
-    private Spiel spiel;
-    private BufferedImage bild;
+    private Animation animation;
 
-    public Spieler(Spiel spiel, Vek2 bildschirm, BufferedImage bild) {
+    public Spieler(Vek2 bildschirm, Animation animation) {
         super(bildschirm.mult(0.5));
-        this.spiel = spiel;
-        this.bild = bild;
+        this.animation = animation;
     }
 
     public void tick() {
@@ -17,6 +14,6 @@ public class Spieler extends SpielObjekt {
     }
 
     public void render(Graphics gfx) {
-        gfx.drawImage(bild, pos.ix(), pos.iy(), null);
+        gfx.drawImage(animation.animieren(), pos.ix(), pos.iy(), null);
     }
 }

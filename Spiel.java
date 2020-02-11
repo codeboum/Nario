@@ -30,12 +30,12 @@ public class Spiel extends Canvas implements Runnable {
     private Leiste leiste;
     private Anzeige anzeige;
 
-    BufferedImage s;
+    BufferedImage bildSpieler;
 
     public Spiel() {
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
-            s = bildLader.laden("\\res\\Nario.png");
+            bildSpieler = bildLader.laden("\\res\\Nario.png");
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
@@ -57,7 +57,7 @@ public class Spiel extends Canvas implements Runnable {
         // Hier SpielObjekte hinzufügen
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
-        objekte.adden(new Spieler(this, bildschirm, s));
+        objekte.adden(new Spieler(bildschirm, new Animation(bildSpieler, 1, new Vek2(80, 100))));
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
@@ -84,8 +84,17 @@ public class Spiel extends Canvas implements Runnable {
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
         // Hier alles zeichnen
-        objekte.render(gfx);
-        anzeige.render(gfx, gibDim());
+        switch (status) {
+            case InGame:
+            case Pausiert:
+                objekte.render(gfx);
+                anzeige.render(gfx, gibDim());
+                break;
+            case HauptMenu:
+            case AdminLogin:
+                anzeige.render(gfx, gibDim());
+                break;
+        }
         leiste.render(gfx);
 
 
