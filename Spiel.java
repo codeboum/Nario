@@ -29,6 +29,7 @@ public class Spiel extends Canvas implements Runnable {
 
     private Leiste leiste;
     private Anzeige anzeige;
+    private Menu menu;
 
     BufferedImage bildSpieler;
 
@@ -39,7 +40,7 @@ public class Spiel extends Canvas implements Runnable {
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
-        status = Status.InGame;
+        status = Status.BenutzerLogin;
         debug = true;
         level = 1;
         fps = 0;
@@ -49,6 +50,7 @@ public class Spiel extends Canvas implements Runnable {
 
         leiste = new Leiste(this);
         anzeige = new Anzeige(this);
+        menu = new Menu(this);
 
         addKeyListener(new TastenModul(this));   // Ein TastenModul wird als KeyListener hinzugefügt
         addMouseListener(new MausModul(this));   // Ein MausModul wird als MouseListener hinzugefügt
@@ -66,7 +68,18 @@ public class Spiel extends Canvas implements Runnable {
 
     // Hier werden Logikupdates ausgeführt
     public void tick() {
-
+        switch (status) {
+            case InGame:
+            case Pausiert:
+                objekte.tick();
+                break;
+            case HauptMenu:
+                break;
+            case BenutzerLogin:
+            case AdminLogin:
+                menu.cursorTick();
+                break;
+        }
     }
 
     // Hier wird die Zeichenfläche bearbeitet bzw bemalt
@@ -91,8 +104,10 @@ public class Spiel extends Canvas implements Runnable {
                 anzeige.render(gfx, gibDim());
                 break;
             case HauptMenu:
+            case BenutzerLogin:
             case AdminLogin:
                 anzeige.render(gfx, gibDim());
+                menu.render(gfx);
                 break;
         }
         leiste.render(gfx);
@@ -105,11 +120,35 @@ public class Spiel extends Canvas implements Runnable {
 
 
     public Status gibStatus() { return status; }
+    public void inGame() {
+        status = Status.InGame;
+        this.requestFocus();
+    }
+    public void pausiert() {
+        status = Status.Pausiert;
+        this.requestFocus();
+    }
+    public void hauptMenu() {
+        status = Status.HauptMenu;
+        this.requestFocus();
+    }
+    public void benutzerLogin() {
+        menu.textInputVorbereiten();
+        status = Status.BenutzerLogin;
+        this.requestFocus();
+    }
+    public void adminLogin() {
+        menu.textInputVorbereiten();
+        status = Status.AdminLogin;
+        this.requestFocus();
+    }
+
     public boolean debugAktiv() { return debug; }
     public int gibLevel() { return level; }
     public int gibFPS() { return fps; }
     public Vek2 gibDim() { return new Vek2(this.getSize()); }
     public DateiModul gibDateiModul() { return dateiModul; }
+    public Menu gibMenu() { return menu; }
 
 
     // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden
@@ -122,6 +161,7 @@ public class Spiel extends Canvas implements Runnable {
         InGame,
         Pausiert,
         HauptMenu,
+        BenutzerLogin,
         AdminLogin;
     }
 

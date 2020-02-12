@@ -7,6 +7,8 @@ import java.awt.Font;
 public abstract class Design {
 	public static String TITEL = "NARIO";
 	public static String ADMINCODE = "";
+	public static String CURSOR = "_";
+	public static int    MAXNAMELAENGE = 20;
 	public static Color  WEISS = Color.WHITE;
 	public static Color  ROT = Color.RED;
 	public static Color  DEBUG = Color.YELLOW;

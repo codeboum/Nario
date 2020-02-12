@@ -15,10 +15,23 @@ public class TastenModul extends KeyAdapter {
 	// Bei Tastenanschlag aufgerufen
 	public void keyPressed(KeyEvent evt) {
 		int taste = evt.getKeyCode();   // Taste, die betätigt wurde
+		Spiel.Status status = spiel.gibStatus();
 
 		if (spiel.debugAktiv()) System.out.println("Taste " + taste + " angeschlagen");
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
+		if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
+			Menu menu = spiel.gibMenu();
+			if ((taste >= 48 && taste <= 57) || (taste >= 65 && taste <= 90) || taste == 95) {
+				if (!evt.isShiftDown() && taste >= 65 && taste <= 90) taste += 32;
+				char c = (char) taste;
+				menu.eingabe(c);
+				return;
+			}
+			else if (taste == 8) {
+				menu.entf();
+			}
+		}
 		switch (taste) {
 			// Mit ESC wird das Spiel beendet
 			case KeyEvent.VK_ESCAPE:
