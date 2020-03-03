@@ -22,7 +22,7 @@ public class MausModul extends MouseAdapter {
 		// Linksklick
 		if (taste == MouseEvent.BUTTON1) {
 			// Schliess-Button (Leiste)
-			if (mpos.auf(new Vek2(dim.ix()-25, 5), new Vek2(20, 20))) {
+			if (mpos.auf(new Vek2(dim.ix()-40, 0), new Vek2(40, 30))) {
 				spiel.beenden();
 				return;
 			}
