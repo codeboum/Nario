@@ -1,5 +1,7 @@
 import java.awt.Graphics;
 
+import java.util.Scanner;
+
 
 // Erbt von Design, da viel darauf zugegriffen wird und man damit Design. in der Notation spart
 
@@ -7,6 +9,8 @@ public class Menu extends Design {
 	private Spiel spiel;
 	private String aktuellerText, cursor;
 	private int cursorIndex;
+
+	private Scanner scan;
 
 	public Menu(Spiel spiel) {
 		this.spiel = spiel;
