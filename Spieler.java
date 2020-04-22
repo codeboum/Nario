@@ -11,7 +11,7 @@ public class Spieler extends SpielObjekt {
 
     public void tick() {
         animation.ticken();
-        pos = pos.add(new Vek2(5, 0));
+        pos = pos.add(new Vek2(2, 0));
     }
 
     public void render(Graphics gfx) {

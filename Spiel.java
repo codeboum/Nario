@@ -38,12 +38,12 @@ public class Spiel extends Canvas implements Runnable {
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
-            bildSpieler = bildLader.laden("\\res\\Nario.png");
+            /*bildSpieler = bildLader.laden("\\res\\Nario.png");*/
             LinkedList<BufferedImage> narioLaufBilder = new LinkedList<BufferedImage>();
             for(int i = 0; i < 8; i++) {
                 narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
             }
-            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 8);
+            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 12);
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
