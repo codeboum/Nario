@@ -20,6 +20,12 @@ public class TastenModul extends KeyAdapter {
 		if (spiel.debugAktiv()) System.out.println("Taste " + taste + " angeschlagen");
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
+		if (status == Spiel.Status.InGame) {
+			if (taste == 84) {
+				spiel.objekte.tick();
+				System.out.println("tick?");
+			}
+		}
 		if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
 			Menu menu = spiel.gibMenu();
 			if ((taste >= 48 && taste <= 57) || (taste >= 65 && taste <= 90) || taste == 95) {

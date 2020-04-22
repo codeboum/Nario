@@ -9,12 +9,13 @@ import java.awt.image.BufferedImage;
 
 public class Animation {
 	LinkedList<BufferedImage> bilder;
-	int anzahl, index;
+	int anzahl, index, fps, fpsIndex;
 	Vek2 groesse;
 
-	public Animation(BufferedImage b, int anzahl, Vek2 groesse) {
+	public Animation(BufferedImage b, int anzahl, Vek2 groesse, int fps) {
 		this.anzahl = anzahl;
 		this.groesse = groesse;
+		this.fps = fps;
 		bilder = new LinkedList<BufferedImage>();
 
 		try {
@@ -26,12 +27,29 @@ public class Animation {
 		}
 
 		index = 0;
+		fpsIndex = 0;
+	}
+	public Animation(LinkedList<BufferedImage> bilder, Vek2 groesse, int fps) {
+		this.anzahl = bilder.size();
+		this.groesse = groesse;
+		this.fps = fps;
+
+		this.bilder = bilder;
+		
+		index = 0;
+		fpsIndex = 0;
 	}
 
-	public BufferedImage animieren() {
-		int i = index;
-		index++;
-		if (index >= anzahl) index = 0;
-		return bilder.get(i);
+
+	public BufferedImage bildGeben() {
+		return bilder.get(index);
+	}
+	public void ticken() {
+		fpsIndex++;
+		if (fpsIndex >= 60/fps) {
+			fpsIndex = 0;
+			index++;
+			if (index >= anzahl) index = 0;
+		}
 	}
 }

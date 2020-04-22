@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 
 
 // Verwaltet alle zentralen Spielprozesse wie bsp. Game-Loop, Zeichnen
@@ -24,7 +25,7 @@ public class Spiel extends Canvas implements Runnable {
     private int level;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
-    private ObjektManager objekte;
+    public  ObjektManager objekte;
     private DateiModul dateiModul;
 
     private Leiste leiste;
@@ -34,13 +35,19 @@ public class Spiel extends Canvas implements Runnable {
     BufferedImage bildSpieler;
 
     public Spiel() {
+        Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
             bildSpieler = bildLader.laden("\\res\\Nario.png");
+            LinkedList<BufferedImage> narioLaufBilder = new LinkedList<BufferedImage>();
+            for(int i = 0; i < 8; i++) {
+                narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
+            }
+            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 8);
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
-        status = Status.BenutzerLogin;
+        status = Status.InGame;
         debug = true;
         level = 1;
         fps = 0;
@@ -59,7 +66,7 @@ public class Spiel extends Canvas implements Runnable {
         // Hier SpielObjekte hinzufügen
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
-        objekte.adden(new Spieler(bildschirm, new Animation(bildSpieler, 1, new Vek2(80, 100))));
+        objekte.adden(new Spieler(bildschirm, narioLauf));
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
@@ -70,8 +77,9 @@ public class Spiel extends Canvas implements Runnable {
     public void tick() {
         switch (status) {
             case InGame:
-            case Pausiert:
                 objekte.tick();
+                break;
+            case Pausiert:
                 break;
             case HauptMenu:
                 break;
