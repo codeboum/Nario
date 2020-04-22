@@ -31,6 +31,9 @@ public class TastenModul extends KeyAdapter {
 			else if (taste == 8) {
 				menu.entf();
 			}
+			else if (taste == 10) {
+				menu.eingabeEnde();
+			}
 		}
 		switch (taste) {
 			// Mit ESC wird das Spiel beendet

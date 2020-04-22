@@ -20,6 +20,8 @@ public class Spiel extends Canvas implements Runnable {
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
+    private String spielerName;
+
     private Status status;
     private boolean debug;
     private int level;
@@ -33,12 +35,14 @@ public class Spiel extends Canvas implements Runnable {
     private Menu menu;
 
     BufferedImage bildSpieler;
+    BufferedImage narioStand;
 
     public Spiel() {
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
             /*bildSpieler = bildLader.laden("\\res\\Nario.png");*/
+            narioStand = bildLader.laden("\\res\\Nario_Stand.png");
             LinkedList<BufferedImage> narioLaufBilder = new LinkedList<BufferedImage>();
             for(int i = 0; i < 8; i++) {
                 narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
@@ -47,7 +51,8 @@ public class Spiel extends Canvas implements Runnable {
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
-        status = Status.InGame;
+        spielerName = "";
+        status = Status.BenutzerLogin;
         debug = true;
         level = 1;
         fps = 0;
@@ -66,7 +71,7 @@ public class Spiel extends Canvas implements Runnable {
         // Hier SpielObjekte hinzufügen
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
-        objekte.adden(new Spieler(bildschirm, narioLauf));
+        objekte.adden(new Spieler(bildschirm, narioLauf, narioStand, spielerName));
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
@@ -157,6 +162,16 @@ public class Spiel extends Canvas implements Runnable {
     public Vek2 gibDim() { return new Vek2(this.getSize()); }
     public DateiModul gibDateiModul() { return dateiModul; }
     public Menu gibMenu() { return menu; }
+
+    public void spielerNameSetzen(String n) {
+        spielerName = n;
+        SpielObjekt spielerSpielObjekt = objekte.suchen(SpielObjekt.Typ.Spieler);
+        if (spielerSpielObjekt != null) {
+            Spieler spieler = (Spieler) spielerSpielObjekt;
+            spieler.setzName(spielerName);
+        }
+    }
+    public String gibSpielerName() { return spielerName; }
 
 
     // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden

@@ -63,6 +63,11 @@ public class Menu extends Design {
 		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);
 	}
 
+	public void eingabeEnde() {
+		spiel.spielerNameSetzen(aktuellerText);
+		spiel.inGame();
+	}
+
 	public void textInputVorbereiten() {
 		cursor = CURSOR;
 		aktuellerText = "";

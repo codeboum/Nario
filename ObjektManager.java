@@ -37,4 +37,13 @@ public class ObjektManager {
 			obj.render(gfx);
 		}
 	}
+	// Sucht ein bestimmtes Objekt in der Liste
+	public SpielObjekt suchen(SpielObjekt.Typ typ) {
+		for (SpielObjekt obj : objekte) {
+			if (obj.gibTyp() == typ) {
+				return obj;
+			}
+		}
+		return null;
+	}
 }
