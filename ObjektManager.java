@@ -8,16 +8,29 @@ import java.util.LinkedList;
 
 public class ObjektManager {
 	LinkedList<SpielObjekt> objekte;   // Beinhaltet SpielObjekte
+	boolean habenSpieler;
 
 	public ObjektManager() {
 		objekte = new LinkedList<SpielObjekt>();
+		habenSpieler = false;
 	}
 
 	// Objekte einfügen/entfernen
-	public void adden(SpielObjekt obj) { objekte.add(obj); }
+	public void adden(SpielObjekt obj) {
+		if (obj.gibTyp() == SpielObjekt.Typ.Spieler) {
+			if (!habenSpieler) {
+				objekte.add(obj);
+				habenSpieler = true;
+			}
+		}
+		objekte.add(obj);
+	}
 	public void entfernen(SpielObjekt obj) { objekte.remove(obj); }
 	// Entfernt alle Objekte, Hilfreich um das Spiel zurückzusetzen, zB zwischen Level
-	public void leeren() { objekte.clear(); }
+	public void leeren() {
+		objekte.clear();
+		habenSpieler = false;
+	}
 	// Entfernt alle Objekte ausser eins, hilfreich um zB alle ausser den Spiel zu entfernen
 	public void leerenAusser(SpielObjekt o) {
 		for (SpielObjekt obj : objekte) {
