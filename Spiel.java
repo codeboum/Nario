@@ -41,12 +41,13 @@ public class Spiel extends Canvas implements Runnable {
     BufferedImage bildSpieler;
     BufferedImage narioStand;
 
+    // Initializiert alle Attribute und Referenzen des Spiels und lädt Dateien
     public Spiel() {
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
-            // Hier Sprites laden
+            // Hier werden Bilder geladen
             BufferedImage hintergrundOriginal = bildLader.laden("\\res\\Hintergrund.png");
             Image geScaled = hintergrundOriginal.getScaledInstance(bildschirm.ix(), bildschirm.iy(), Image.SCALE_SMOOTH);
             hintergrund = new BufferedImage(bildschirm.ix(), bildschirm.iy(), 1);
@@ -119,7 +120,7 @@ public class Spiel extends Canvas implements Runnable {
         gfx.setColor(Color.BLACK);
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        // Hier alles zeichnen
+        // Hier alle SpielObjekte etc zeichnen
         switch (status) {
             case InGame:
             case Pausiert:
@@ -148,6 +149,7 @@ public class Spiel extends Canvas implements Runnable {
 
 
     public Status gibStatus() { return status; }
+    // Methoden zur Statusveränderung
     public void inGame() {
         status = Status.InGame;
         this.requestFocus();

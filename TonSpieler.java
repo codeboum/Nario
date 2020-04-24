@@ -5,6 +5,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
+// Spielt Audiodateien ab, optional mit Endloschleife
+
 public class TonSpieler {
 	public void spielen(String dateiPfad, boolean schleife) {
 		try {

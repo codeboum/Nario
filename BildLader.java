@@ -4,7 +4,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 
-// Diese Klasse lädt Bilder und gibt sie als nutzbare Objekte zurück
+// Diese Klasse lädt Bilder und gibt sie als nutzbare BufferedImage Objekte zurück
 
 public class BildLader {
     public BufferedImage laden(String pfad) {

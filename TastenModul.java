@@ -35,6 +35,8 @@ public class TastenModul extends KeyAdapter {
 		} 
 		else if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
 			Menu menu = spiel.gibMenu();
+
+			// Verwaltet Textinput-Funktion
 			if ((taste >= 48 && taste <= 57) ||   // Zahlen
 			(taste >= 65 && taste <= 90) ||   // Buchstaben
 			taste == 45) {   // Bindestrich/Unterstrich

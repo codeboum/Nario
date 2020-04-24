@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 
-// Hier werden alle verwendeten Farben und Schriftarten des Spiels gespeichert
+// Hier werden alle verwendeten Farben und Schriftarten des Spiels gespeichert, sowie andere nützliche Parameter
 
 public abstract class Design {
 	public static String TITEL = "NARIO";

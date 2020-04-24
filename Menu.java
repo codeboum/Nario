@@ -1,16 +1,13 @@
 import java.awt.Graphics;
 
-import java.util.Scanner;
 
-
+// Verwaltet alle Menu-Bildschirme
 // Erbt von Design, da viel darauf zugegriffen wird und man damit Design. in der Notation spart
 
 public class Menu extends Design {
 	private Spiel spiel;
 	private String aktuellerText, cursor;
 	private int cursorIndex;
-
-	private Scanner scan;
 
 	public Menu(Spiel spiel) {
 		this.spiel = spiel;
@@ -23,6 +20,7 @@ public class Menu extends Design {
 		int x = dim.ix();
 		int y = dim.iy();
 
+		// Zeichnet die verschiedenen Menu-Bildschirme
 		switch (status) {
 			case HauptMenu:
 				gfx.setColor(WEISS);
@@ -56,6 +54,7 @@ public class Menu extends Design {
 		}
 	}
 
+	// Verwaltet Texteingabe
 	public void eingabe(char taste) {
 		if (aktuellerText.length() < MAXNAMELAENGE) {
 			aktuellerText += taste;
@@ -68,6 +67,7 @@ public class Menu extends Design {
 		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);
 	}
 
+	// Validiert Texteingabe und startet Spiel
 	public void eingabeEnde() {
 		spiel.spielerNameSetzen(aktuellerText);
 		spiel.inGame();

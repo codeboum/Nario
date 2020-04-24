@@ -11,6 +11,7 @@ public class Leiste {
 		this.spiel = spiel;
 	}
 
+	// Setzt die Titelleiste auf die gewünschten Einstellungen und zeichnet sie
 	public void render(Graphics gfx) {
 		Vek2 dim = spiel.gibDim();
 

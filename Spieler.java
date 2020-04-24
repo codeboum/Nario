@@ -2,6 +2,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 
+// Spieler-Objekt, erbt von SpielObjekt
+// Beinhaltet bereits Laufanimation (wird noch nicht benutzt)
+
 public class Spieler extends SpielObjekt {
     private Animation animation;
     private BufferedImage bildStand;
@@ -12,12 +15,10 @@ public class Spieler extends SpielObjekt {
         this.animation = animation;
         this.bildStand = bildStand;
         this.name = name;
-        this.v = new Vek2(0.1, 0);
     }
 
     public void tick() {
         animation.ticken();
-        this.pos = this.pos.add(this.v);
     }
 
     public void render(Graphics gfx) {

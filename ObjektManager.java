@@ -15,7 +15,7 @@ public class ObjektManager {
 		habenSpieler = false;
 	}
 
-	// Objekte einfügen/entfernen
+	// Objekte einfügen
 	public void adden(SpielObjekt obj) {
 		if (obj.gibTyp() == SpielObjekt.Typ.Spieler) {
 			if (!habenSpieler) {
@@ -25,6 +25,7 @@ public class ObjektManager {
 		}
 		objekte.add(obj);
 	}
+	// Objekte entfernen
 	public void entfernen(SpielObjekt obj) { objekte.remove(obj); }
 	// Entfernt alle Objekte, Hilfreich um das Spiel zurückzusetzen, zB zwischen Level
 	public void leeren() {
