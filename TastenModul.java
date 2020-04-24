@@ -19,27 +19,44 @@ public class TastenModul extends KeyAdapter {
 
 		if (spiel.debugAktiv()) System.out.println("Taste " + taste + " angeschlagen");
 
+		switch (taste) {
+			// Mit ESC wird das Spiel beendet
+			case KeyEvent.VK_ESCAPE:
+				spiel.beenden();
+				return;
+		}
+
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
-		if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
+		if (status == Spiel.Status.HauptMenu) {
+			if (taste == 10) {
+				spiel.benutzerLogin();
+				return;
+			}
+		} 
+		else if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
 			Menu menu = spiel.gibMenu();
-			if ((taste >= 48 && taste <= 57) || (taste >= 65 && taste <= 90) || taste == 95) {
+			if ((taste >= 48 && taste <= 57) ||   // Zahlen
+			(taste >= 65 && taste <= 90) ||   // Buchstaben
+			taste == 45) {   // Bindestrich/Unterstrich
+				if (evt.isShiftDown() && taste >= 48 && taste <= 57) return;
 				if (!evt.isShiftDown() && taste >= 65 && taste <= 90) taste += 32;
+				if (evt.isShiftDown() && taste == 45) taste = 95;
 				char c = (char) taste;
 				menu.eingabe(c);
 				return;
 			}
 			else if (taste == 8) {
 				menu.entf();
+				return;
 			}
 			else if (taste == 10) {
 				menu.eingabeEnde();
+				return;
 			}
-		}
-		switch (taste) {
-			// Mit ESC wird das Spiel beendet
-			case KeyEvent.VK_ESCAPE:
-				spiel.beenden();
-				break;
+			else {
+				System.out.println("Nachricht!");
+				spiel.nachrichten.schicken(new Nachricht("Es werden nur Buchstaben und Bindestriche/Unterstriche akzeptiert"));
+			}
 		}
 	}
 }

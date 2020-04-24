@@ -4,6 +4,7 @@ import java.awt.Graphics;
 // Klasse stellt Titelleiste dar
 
 public class Leiste {
+	public static final int HOEHE = 30;
 	Spiel spiel;
 
 	public Leiste(Spiel spiel) {
@@ -14,7 +15,7 @@ public class Leiste {
 		Vek2 dim = spiel.gibDim();
 
 		gfx.setColor(Design.LEISTE);
-		gfx.fillRect(0, 0, dim.ix(), 30);
+		gfx.fillRect(0, 0, dim.ix(), HOEHE);
 
 		gfx.setFont(Design.TEXTTITEL);
 		gfx.setColor(Design.WEISS);

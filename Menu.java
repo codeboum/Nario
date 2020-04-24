@@ -27,7 +27,7 @@ public class Menu extends Design {
 			case HauptMenu:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
-				gfx.drawString("Main Menu", 100, 100);
+				gfx.drawString("Main Menu - Press Enter", 100, 100);
 				break;
 			case BenutzerLogin:
 				gfx.setColor(WEISS);

@@ -17,6 +17,7 @@ public class Spiel extends Canvas implements Runnable {
         new Spiel();
     }
 
+    public static final double FPS = 60.0;
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
@@ -28,6 +29,7 @@ public class Spiel extends Canvas implements Runnable {
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
     public  ObjektManager objekte;
+    public  NachrichtenManager nachrichten;
     private DateiModul dateiModul;
 
     private Leiste leiste;
@@ -52,12 +54,13 @@ public class Spiel extends Canvas implements Runnable {
 
         laufend = false;
         spielerName = "";
-        status = Status.BenutzerLogin;
+        status = Status.HauptMenu;
         debug = true;
         level = 1;
         fps = 0;
 
         objekte = new ObjektManager();
+        nachrichten = new NachrichtenManager();
         dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
 
         leiste = new Leiste(this);
@@ -93,6 +96,7 @@ public class Spiel extends Canvas implements Runnable {
                 menu.cursorTick();
                 break;
         }
+        nachrichten.tick();
     }
 
     // Hier wird die Zeichenfläche bearbeitet bzw bemalt
@@ -124,6 +128,7 @@ public class Spiel extends Canvas implements Runnable {
                 break;
         }
         leiste.render(gfx);
+        nachrichten.render(gfx);
 
 
         // Grafik-Objekt wird entsorgt und Frame wird angezeigt
@@ -209,12 +214,13 @@ public class Spiel extends Canvas implements Runnable {
 
     // Diese Methode beinhaltet die Game-Loop
     // Sie wird beim Starten des Thread automatisch ausgeführt
-    // Die Game-Loop ruft 60x pro Sekunde (definiert als tickAnzahl) tick() und render() auf,
+    // Die Game-Loop ruft so schnell wie möglich, das bild wird in jedem Durchlauf gezeichnet (render())
+    // 60x pro Sekunde (definiert als tickAnzahl) ruft sie tick() auf,
     //  und berechnet einmal pro Sekunde die Bildrate (fps)
     public void run() {
         this.requestFocus();
         long letztZeit = System.nanoTime();
-        double tickAnzahl = 60.0;
+        double tickAnzahl = FPS;
         double ns = 1000000000 / tickAnzahl;
         double delta = 0.0;
         long uhr = System.currentTimeMillis();
