@@ -31,6 +31,7 @@ public class Spiel extends Canvas implements Runnable {
     public  ObjektManager objekte;
     public  NachrichtenManager nachrichten;
     private DateiModul dateiModul;
+    private TonSpieler ton;
 
     private Leiste leiste;
     private Anzeige anzeige;
@@ -68,6 +69,7 @@ public class Spiel extends Canvas implements Runnable {
         objekte = new ObjektManager();
         nachrichten = new NachrichtenManager();
         dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
+        ton = new TonSpieler();
 
         leiste = new Leiste(this);
         anzeige = new Anzeige(this);
@@ -204,6 +206,8 @@ public class Spiel extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
         laufend = true;
+        this.requestFocus();
+        ton.spielen("\\res\\Nario.wav", true);
     }
 
     // Beendet den Thread
