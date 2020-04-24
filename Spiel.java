@@ -130,6 +130,9 @@ public class Spiel extends Canvas implements Runnable {
             case HauptMenu:
             case BenutzerLogin:
             case AdminLogin:
+                gfx.drawImage(hintergrund, 0, 0, null);
+                gfx.setColor(new Color(0, 0, 0, 150));
+                gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
                 anzeige.render(gfx, gibDim());
                 menu.render(gfx);
                 break;

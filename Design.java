@@ -10,6 +10,7 @@ public abstract class Design {
 	public static String CURSOR = "_";
 	public static int    MAXNAMELAENGE = 20;
 	public static Color  WEISS = Color.WHITE;
+	public static Color  SCHWARZ = Color.BLACK;
 	public static Color  ROT = Color.RED;
 	public static Color  DEBUG = Color.YELLOW;
 	public static Color  FARBE = Color.GREEN;
