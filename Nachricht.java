@@ -2,17 +2,17 @@ import java.awt.Graphics;
 
 
 public class Nachricht {
-	String nachricht;
+	String text;
 	int zeit;
 
-	public Nachricht(String nachricht, int sekunden) {
-		this.nachricht = nachricht;
-		if (nachricht.length() > 100) nachricht = nachricht.substring(0, 100);
+	public Nachricht(String text, int sekunden) {
+		this.text = text;
+		if (text.length() > 100) text = text.substring(0, 100);
 		zeit = (int) (sekunden * Spiel.FPS);
 	}
-	public Nachricht(String nachricht) {
-		this.nachricht = nachricht;
-		if (nachricht.length() > 100) nachricht = nachricht.substring(0, 100);
+	public Nachricht(String text) {
+		this.text = text;
+		if (text.length() > 100) text = text.substring(0, 100);
 		zeit = (int) (5 * Spiel.FPS);
 	}
 
@@ -24,9 +24,11 @@ public class Nachricht {
 		return true;
 	}
 
-	public void render(Graphics gfx) {
+	public void render(Graphics gfx, int index) {
 		gfx.setColor(Design.ROT);
 		gfx.setFont(Design.TEXT14);
-		gfx.drawString(nachricht, 5, Leiste.HOEHE + 16);
+		gfx.drawString(text, 5, Leiste.HOEHE + 16 * (index+1));
 	}
+
+	public String gibText() { return text; }
 }

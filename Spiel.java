@@ -36,20 +36,26 @@ public class Spiel extends Canvas implements Runnable {
     private Anzeige anzeige;
     private Menu menu;
 
+    BufferedImage hintergrund;
     BufferedImage bildSpieler;
     BufferedImage narioStand;
 
     public Spiel() {
+        Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
+        Vek2 bildschirm = new Vek2(b);
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier Sprites laden
-            /*bildSpieler = bildLader.laden("\\res\\Nario.png");*/
+            BufferedImage hintergrundOriginal = bildLader.laden("\\res\\Hintergrund.png");
+            Image geScaled = hintergrundOriginal.getScaledInstance(bildschirm.ix(), bildschirm.iy(), Image.SCALE_SMOOTH);
+            hintergrund = new BufferedImage(bildschirm.ix(), bildschirm.iy(), 1);
+            hintergrund.getGraphics().drawImage(geScaled, 0, 0, null);
             narioStand = bildLader.laden("\\res\\Nario_Stand.png");
             LinkedList<BufferedImage> narioLaufBilder = new LinkedList<BufferedImage>();
             for(int i = 0; i < 8; i++) {
                 narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
             }
-            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 12);
+            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 8);
         } catch (Exception e) { e.printStackTrace(); }
 
         laufend = false;
@@ -72,8 +78,6 @@ public class Spiel extends Canvas implements Runnable {
 
 
         // Hier SpielObjekte hinzufügen
-        Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
-        Vek2 bildschirm = new Vek2(b);
         objekte.adden(new Spieler(bildschirm, narioLauf, narioStand, spielerName));
 
 
@@ -117,6 +121,7 @@ public class Spiel extends Canvas implements Runnable {
         switch (status) {
             case InGame:
             case Pausiert:
+                gfx.drawImage(hintergrund, 0, 0, null);
                 objekte.render(gfx);
                 anzeige.render(gfx, gibDim());
                 break;

@@ -21,8 +21,8 @@ public class Spieler extends SpielObjekt {
     public void render(Graphics gfx) {
         gfx.setFont(Design.TEXT36);
         gfx.setColor(Design.WEISS);
-        gfx.drawString(name, pos.ix() + 100, pos.iy());
-        gfx.drawImage(bildStand, pos.ix(), pos.iy(), null);
+        gfx.drawString(name, pos.ix() + 30, pos.iy());
+        gfx.drawImage(animation.bildGeben(), pos.ix(), pos.iy(), null);
     }
 
     public void setzName(String n) {

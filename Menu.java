@@ -57,7 +57,12 @@ public class Menu extends Design {
 	}
 
 	public void eingabe(char taste) {
-		if (aktuellerText.length() < MAXNAMELAENGE) aktuellerText += taste;
+		if (aktuellerText.length() < MAXNAMELAENGE) {
+			aktuellerText += taste;
+		}
+		else {
+			spiel.nachrichten.schicken(new Nachricht("Name should not be longer than 20 characters"));
+		}
 	}
 	public void entf() {
 		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);

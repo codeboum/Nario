@@ -53,9 +53,8 @@ public class TastenModul extends KeyAdapter {
 				menu.eingabeEnde();
 				return;
 			}
-			else {
-				System.out.println("Nachricht!");
-				spiel.nachrichten.schicken(new Nachricht("Es werden nur Buchstaben und Bindestriche/Unterstriche akzeptiert"));
+			else if (taste != 16) {
+				spiel.nachrichten.schicken(new Nachricht("Please only enter Letters, Numbers or hyphens/underscores"));
 			}
 		}
 	}

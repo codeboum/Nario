@@ -3,27 +3,32 @@ import java.util.LinkedList;
 
 
 public class NachrichtenManager {
-	private LinkedList<Nachricht> nachrichten;
+	private LinkedList<Nachricht> liste;
 
 	public NachrichtenManager() {
-		nachrichten = new LinkedList<Nachricht>();
+		liste = new LinkedList<Nachricht>();
 	}
 
-	public void schicken(Nachricht n) {
-		nachrichten.add(n);
+	public void schicken(Nachricht neu) {
+		for (Nachricht n : liste) {
+			if (n.gibText() == neu.gibText()) {
+				return;
+			}
+		}
+		liste.add(neu);
 	}
 
 	public void tick() {
-		for (Nachricht n : nachrichten) {
+		for (Nachricht n : liste) {
 			if (!n.tick()) {
-				nachrichten.remove(n);
+				liste.remove(n);
 			}
 		}
 	}
 
 	public void render(Graphics gfx) {
-		for (Nachricht n : nachrichten) {
-			n.render(gfx);
+		for (Nachricht n : liste) {
+			n.render(gfx, liste.indexOf(n));
 		}
 	}
 }
