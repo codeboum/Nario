@@ -21,7 +21,7 @@ public class Leiste {
 		gfx.setFont(Design.TEXTTITEL);
 		gfx.setColor(Design.WEISS);
 		String titel = Design.TITEL;
-		titel += (spiel.debugAktiv()) ? " - DEBUG" : "";
+		titel += (spiel.adminModusAktiv()) ? " - ADMIN MODE" : "";
 		gfx.drawString(titel, 5, 22);
 
 		gfx.setColor(Design.ROT);
