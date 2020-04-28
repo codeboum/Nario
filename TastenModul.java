@@ -31,7 +31,7 @@ public class TastenModul extends KeyAdapter {
 				spiel.nachrichten.schicken("Sound is now on", Nachricht.Typ.Normal);
 			}
 		}
-		if (status == Spiel.Status.InGame) {
+		if (status == Spiel.Status.InGame || status == Spiel.Status.Pausiert) {
 			switch (taste) {
 				case KeyEvent.VK_ESCAPE:
 					if (!admin) {
@@ -41,6 +41,9 @@ public class TastenModul extends KeyAdapter {
 						spiel.adminMenu();
 					}
 					return;
+				case 80:   // P
+					if (status == Spiel.Status.InGame) spiel.pausiert();
+					else spiel.inGame();
 			}
 		}
 		if (status == Spiel.Status.HauptMenu) {
