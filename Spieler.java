@@ -31,4 +31,5 @@ public class Spieler extends SpielObjekt {
     public void setzName(String n) {
         this.name = n;
     }
+    public String gibName() { return name; }
 }

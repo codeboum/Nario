@@ -21,30 +21,28 @@ public class Spiel extends Canvas implements Runnable {
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
-    private String spielerName;
-
+    private boolean adminModus;
     private Status status;
-    private boolean debug;
-    private int level;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
-    public  ObjektManager objekte;
+    public  Spieler spieler;
+    public  Level level;
     public  NachrichtenManager nachrichten;
     private DateiModul dateiModul;
-    private TonSpieler ton;
 
     private Leiste leiste;
     private Anzeige anzeige;
     private Menu menu;
 
     BufferedImage hintergrund;
-    BufferedImage bildSpieler;
-    BufferedImage narioStand;
+    Ton musik;
 
     // Initializiert alle Attribute und Referenzen des Spiels und lädt Dateien
     public Spiel() {
         Dimension b = Toolkit.getDefaultToolkit().getScreenSize();
         Vek2 bildschirm = new Vek2(b);
+        
+        BufferedImage narioStand = null;
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier werden Bilder geladen
@@ -58,19 +56,19 @@ public class Spiel extends Canvas implements Runnable {
                 narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
             }
             narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 8);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        musik = new Ton("\\res\\Nario.wav");
 
         laufend = false;
-        spielerName = "";
+        adminModus = false;
         status = Status.HauptMenu;
-        debug = true;
-        level = 1;
         fps = 0;
 
-        objekte = new ObjektManager();
+        level = new Level();
         nachrichten = new NachrichtenManager();
         dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
-        ton = new TonSpieler();
 
         leiste = new Leiste(this);
         anzeige = new Anzeige(this);
@@ -80,8 +78,7 @@ public class Spiel extends Canvas implements Runnable {
         addMouseListener(new MausModul(this));   // Ein MausModul wird als MouseListener hinzugefügt
 
 
-        // Hier SpielObjekte hinzufügen
-        objekte.adden(new Spieler(bildschirm, narioLauf, narioStand, spielerName));
+        spieler = new Spieler(bildschirm, narioLauf, narioStand, "");
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
@@ -92,11 +89,13 @@ public class Spiel extends Canvas implements Runnable {
     public void tick() {
         switch (status) {
             case InGame:
-                objekte.tick();
+                spieler.tick();
+                level.tick(spieler);
                 break;
             case Pausiert:
                 break;
             case HauptMenu:
+            case AdminMenu:
                 break;
             case BenutzerLogin:
             case AdminLogin:
@@ -125,10 +124,12 @@ public class Spiel extends Canvas implements Runnable {
             case InGame:
             case Pausiert:
                 gfx.drawImage(hintergrund, 0, 0, null);
-                objekte.render(gfx);
+                spieler.render(gfx);
+                level.render(gfx);
                 anzeige.render(gfx, gibDim());
                 break;
             case HauptMenu:
+            case AdminMenu:
             case BenutzerLogin:
             case AdminLogin:
                 gfx.drawImage(hintergrund, 0, 0, null);
@@ -162,6 +163,10 @@ public class Spiel extends Canvas implements Runnable {
         status = Status.HauptMenu;
         this.requestFocus();
     }
+    public void adminMenu() {
+        status = Status.AdminMenu;
+        this.requestFocus();
+    }
     public void benutzerLogin() {
         menu.textInputVorbereiten();
         status = Status.BenutzerLogin;
@@ -173,22 +178,29 @@ public class Spiel extends Canvas implements Runnable {
         this.requestFocus();
     }
 
-    public boolean debugAktiv() { return debug; }
-    public int gibLevel() { return level; }
+    public boolean adminModusAktiv() { return adminModus; }
+    public void adminModusAktivieren() {
+        adminModus = true;
+        spieler.setzName("ADMIN");
+    }
+    public void adminModusBeenden() {
+        adminModus = false;
+        spieler.setzName("");
+    }
+
+    public void soundAn() {
+        Design.SOUNDAN = true;
+        musik.spielen(true);
+    }
+    public void soundAus() {
+        Design.SOUNDAN = false;
+        musik.stoppen();
+    }
+
     public int gibFPS() { return fps; }
     public Vek2 gibDim() { return new Vek2(this.getSize()); }
     public DateiModul gibDateiModul() { return dateiModul; }
     public Menu gibMenu() { return menu; }
-
-    public void spielerNameSetzen(String n) {
-        spielerName = n;
-        SpielObjekt spielerSpielObjekt = objekte.suchen(SpielObjekt.Typ.Spieler);
-        if (spielerSpielObjekt != null) {
-            Spieler spieler = (Spieler) spielerSpielObjekt;
-            spieler.setzName(spielerName);
-        }
-    }
-    public String gibSpielerName() { return spielerName; }
 
 
     // Beendet das ganze Programm - Hier wird später das Speichern von Dateien stattfinden
@@ -201,6 +213,7 @@ public class Spiel extends Canvas implements Runnable {
         InGame,
         Pausiert,
         HauptMenu,
+        AdminMenu,
         BenutzerLogin,
         AdminLogin;
     }
@@ -212,7 +225,10 @@ public class Spiel extends Canvas implements Runnable {
         thread.start();
         laufend = true;
         this.requestFocus();
-        ton.spielen("\\res\\Nario.wav", true);
+        musik.spielen(true);
+        // Vorübergehend
+        adminModusAktivieren();
+		adminMenu();
     }
 
     // Beendet den Thread

@@ -16,23 +16,66 @@ public class TastenModul extends KeyAdapter {
 	public void keyPressed(KeyEvent evt) {
 		int taste = evt.getKeyCode();   // Taste, die betätigt wurde
 		Spiel.Status status = spiel.gibStatus();
+		boolean admin = spiel.adminModusAktiv();
 
-		if (spiel.debugAktiv()) System.out.println("Taste " + taste + " angeschlagen");
-
-		switch (taste) {
-			// Mit ESC wird das Spiel beendet
-			case KeyEvent.VK_ESCAPE:
-				spiel.beenden();
-				return;
-		}
+		if (admin) System.out.println("Taste " + taste + " angeschlagen");
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
-		if (status == Spiel.Status.HauptMenu) {
-			if (taste == 10) {
-				spiel.benutzerLogin();
-				return;
+		if (taste == 83) {
+			if (Design.SOUNDAN) {
+				spiel.soundAus();
+				spiel.nachrichten.schicken("Sound is now off", Nachricht.Typ.Normal);
 			}
-		} 
+			else {
+				spiel.soundAn();
+				spiel.nachrichten.schicken("Sound is now on", Nachricht.Typ.Normal);
+			}
+		}
+		if (status == Spiel.Status.InGame) {
+			switch (taste) {
+				case KeyEvent.VK_ESCAPE:
+					if (!admin) {
+						spiel.hauptMenu();
+					}
+					else {
+						spiel.adminMenu();
+					}
+					return;
+			}
+		}
+		if (status == Spiel.Status.HauptMenu) {
+			switch (taste) {
+				case 49:
+					spiel.benutzerLogin();
+					break;
+				case 50:
+					spiel.adminLogin();
+					break;
+				case 51:
+				case KeyEvent.VK_ESCAPE:
+					spiel.beenden();
+					return;
+			}
+		}
+		else if (status == Spiel.Status.AdminMenu) {
+			switch (taste) {
+				case 49:
+					spiel.inGame();
+					break;
+				case 50:
+					spiel.adminModusBeenden();
+					spiel.nachrichten.schicken("Logged out of Admin Mode", Nachricht.Typ.Normal);
+					spiel.hauptMenu();
+					break;
+				case 51:
+					spiel.nachrichten.schicken("Not implemented", Nachricht.Typ.Normal);
+					break;
+				case 52:
+				case KeyEvent.VK_ESCAPE:
+					spiel.beenden();
+					return;
+			}
+		}
 		else if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
 			Menu menu = spiel.gibMenu();
 
@@ -52,11 +95,11 @@ public class TastenModul extends KeyAdapter {
 				return;
 			}
 			else if (taste == 10) {
-				menu.eingabeEnde();
+				menu.eingabeEnde(status == Spiel.Status.AdminLogin);
 				return;
 			}
 			else if (taste != 16) {
-				spiel.nachrichten.schicken(new Nachricht("Please only enter Letters, Numbers or hyphens/underscores"));
+				spiel.nachrichten.schicken("Please only enter Letters, Numbers or hyphens/underscores", Nachricht.Typ.Warnung);
 			}
 		}
 	}

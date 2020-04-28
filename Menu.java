@@ -25,7 +25,19 @@ public class Menu extends Design {
 			case HauptMenu:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
-				gfx.drawString("Main Menu - Press Enter", 100, 100);
+				gfx.drawString("Main Menu", 100, 100);
+				gfx.drawString("1 - Play", 100, 140);
+				gfx.drawString("2 - Login as Admin", 100, 180);
+				gfx.drawString("3 - Close Game", 100, 220);
+				break;
+			case AdminMenu:
+				gfx.setColor(WEISS);
+				gfx.setFont(TEXT36);
+				gfx.drawString("Admin Menu", 100, 100);
+				gfx.drawString("1 - Play", 100, 140);
+				gfx.drawString("2 - Logout of Admin Mode", 100, 180);
+				gfx.drawString("3 - Edit Highscores", 100, 220);
+				gfx.drawString("4 - Close Game", 100, 260);
 				break;
 			case BenutzerLogin:
 				gfx.setColor(WEISS);
@@ -60,17 +72,38 @@ public class Menu extends Design {
 			aktuellerText += taste;
 		}
 		else {
-			spiel.nachrichten.schicken(new Nachricht("Name should not be longer than 20 characters"));
+			spiel.nachrichten.schicken("Name should not be longer than 20 characters", Nachricht.Typ.Warnung);
 		}
 	}
 	public void entf() {
 		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);
 	}
 
-	// Validiert Texteingabe und startet Spiel
-	public void eingabeEnde() {
-		spiel.spielerNameSetzen(aktuellerText);
-		spiel.inGame();
+	// Validiert Texteingabe und startet Spiel, falls admin true ist wird auf den admincode getestet
+	public void eingabeEnde(boolean admin) {
+		if (admin) {
+			System.out.println("\""+aktuellerText+"\" getestet auf \""+ADMINCODE+"\"");
+			System.out.println(aktuellerText.equals(ADMINCODE));
+			if (aktuellerText.equals(ADMINCODE)) {
+				spiel.adminModusAktivieren();
+				spiel.nachrichten.schicken("Admin Mode activated!", Nachricht.Typ.Normal);
+				spiel.adminMenu();
+			}
+			else {
+				spiel.nachrichten.schicken("Invalid Admin Code!", Nachricht.Typ.Warnung);
+				spiel.hauptMenu();
+			}
+		}
+		else {
+			if (aktuellerText.length() == 0) {
+				spiel.nachrichten.schicken("The Name cannot be empty!", Nachricht.Typ.Warnung);
+			}
+			else {
+				spiel.spieler.setzName(aktuellerText);
+				spiel.inGame();
+			}
+		}
+		textInputVorbereiten();
 	}
 
 	public void textInputVorbereiten() {
