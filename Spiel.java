@@ -25,17 +25,14 @@ public class Spiel extends Canvas implements Runnable {
     private Status status;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
-    
+    public  Spieler spieler;
+    public  Level level;
     public  NachrichtenManager nachrichten;
     private DateiModul dateiModul;
 
     private Leiste leiste;
     private Anzeige anzeige;
     private Menu menu;
-
-    
-    public  Spieler spieler;
-    public  Level level;
 
     BufferedImage hintergrund;
     Ton musik;
@@ -69,7 +66,7 @@ public class Spiel extends Canvas implements Runnable {
         status = Status.HauptMenu;
         fps = 0;
 
-        
+        level = new Level();
         nachrichten = new NachrichtenManager();
         dateiModul = new DateiModul(Paths.get(System.getProperty("user.dir")));
 
@@ -82,8 +79,6 @@ public class Spiel extends Canvas implements Runnable {
 
 
         spieler = new Spieler(bildschirm, narioLauf, narioStand, "");
-        String levelDaten = dateiModul.laden("\\levels\\level1.txt");
-        level = new Level(levelDaten);
 
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
@@ -125,20 +120,19 @@ public class Spiel extends Canvas implements Runnable {
         gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
 
         // Hier alle SpielObjekte etc zeichnen
-        gfx.drawImage(hintergrund, 0, 0, null);
         switch (status) {
             case InGame:
-                level.render(gfx);
+            case Pausiert:
+                gfx.drawImage(hintergrund, 0, 0, null);
                 spieler.render(gfx);
+                level.render(gfx);
                 anzeige.render(gfx, gibDim());
                 break;
-            case Pausiert:
-                level.render(gfx);
-                spieler.render(gfx);
             case HauptMenu:
             case AdminMenu:
             case BenutzerLogin:
             case AdminLogin:
+                gfx.drawImage(hintergrund, 0, 0, null);
                 gfx.setColor(new Color(0, 0, 0, 150));
                 gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
                 anzeige.render(gfx, gibDim());

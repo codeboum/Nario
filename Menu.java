@@ -22,13 +22,6 @@ public class Menu extends Design {
 
 		// Zeichnet die verschiedenen Menu-Bildschirme
 		switch (status) {
-			case Pausiert:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
-				gfx.drawString("Pause Menu", 100, 100);
-				gfx.drawString("P - Resume Game", 100, 140);
-				gfx.drawString("ESC - Exit to Menu", 100, 180);
-				break;
 			case HauptMenu:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);

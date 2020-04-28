@@ -30,6 +30,6 @@ public class Anzeige extends Design {
 			gfx.drawString("OFF", 55, dim.iy()-5);
 		}
 		gfx.setColor(GELB);
-		gfx.drawString(spiel.level.gibTitel(), 105, dim.iy()-5);
+		gfx.drawString("PLACEHOLDER", 105, dim.iy()-5);
 	}
 }
