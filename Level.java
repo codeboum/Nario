@@ -7,22 +7,16 @@ import java.util.LinkedList;
 // Die Hauptaufgabe der Klasse ist, auf allen SpielObjekten tick() und render() aufzurufen
 
 public class Level {
+	String titel;
 	LinkedList<SpielObjekt> objekte;   // Beinhaltet SpielObjekte
-	boolean habenSpieler;
 
-	public Level() {
+	public Level(String daten) {
+		titel = "PLACEHOLDER";
 		objekte = new LinkedList<SpielObjekt>();
-		habenSpieler = false;
 	}
 
 	// Objekte einfügen
 	public void adden(SpielObjekt obj) {
-		if (obj.gibTyp() == SpielObjekt.Typ.Spieler) {
-			if (!habenSpieler) {
-				objekte.add(obj);
-				habenSpieler = true;
-			}
-		}
 		objekte.add(obj);
 	}
 	// Objekte entfernen
@@ -30,7 +24,6 @@ public class Level {
 	// Entfernt alle Objekte, Hilfreich um das Spiel zurückzusetzen, zB zwischen Level
 	public void leeren() {
 		objekte.clear();
-		habenSpieler = false;
 	}
 	// Entfernt alle Objekte ausser eins, hilfreich um zB alle ausser den Spiel zu entfernen
 	public void leerenAusser(SpielObjekt o) {
@@ -51,13 +44,6 @@ public class Level {
 			obj.render(gfx);
 		}
 	}
-	// Sucht ein bestimmtes Objekt in der Liste
-	public SpielObjekt suchen(SpielObjekt.Typ typ) {
-		for (SpielObjekt obj : objekte) {
-			if (obj.gibTyp() == typ) {
-				return obj;
-			}
-		}
-		return null;
-	}
+
+	public String gibTitel() { return titel; }
 }
