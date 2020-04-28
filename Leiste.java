@@ -15,22 +15,22 @@ public class Leiste {
 	public void render(Graphics gfx) {
 		Vek2 dim = spiel.gibDim();
 
-		gfx.setColor(Design.LEISTE);
+		gfx.setColor(Konfig.LEISTE);
 		gfx.fillRect(0, 0, dim.ix(), HOEHE);
 
-		gfx.setFont(Design.TEXTTITEL);
-		gfx.setColor(Design.WEISS);
-		String titel = Design.TITEL;
+		gfx.setFont(Konfig.TEXTTITEL);
+		gfx.setColor(Konfig.WEISS);
+		String titel = Konfig.TITEL;
 		titel += (spiel.adminModusAktiv()) ? " - ADMIN MODE" : "";
 		gfx.drawString(titel, 5, 22);
 
-		gfx.setColor(Design.ROT);
+		gfx.setColor(Konfig.ROT);
 		gfx.fillRect(dim.ix()-40, 0, 40, 30);
-		gfx.setColor(Design.WEISS);
+		gfx.setColor(Konfig.WEISS);
 		gfx.drawLine(dim.ix()-28, 7, dim.ix()-13, 22);
 		gfx.drawLine(dim.ix()-28, 22, dim.ix()-13, 7);
 
-		gfx.setColor(Design.WEISS);
+		gfx.setColor(Konfig.WEISS);
 		gfx.drawLine(0, 29, dim.ix()-1, 29);
 	}
 }

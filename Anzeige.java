@@ -4,7 +4,7 @@ import java.awt.Graphics;
 // Verwaltet die Anzeige von Spiel-Parametern - Level, Punkte, usw
 // Erbt von Design, da viel darauf zugegriffen wird und man damit "Design." in der Notation spart
 
-public class Anzeige extends Design {
+public class Anzeige extends Konfig {
 	Spiel spiel;
 
 	public Anzeige(Spiel spiel) {

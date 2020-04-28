@@ -17,7 +17,6 @@ public class Spiel extends Canvas implements Runnable {
         new Spiel();
     }
 
-    public static final double FPS = 60.0;
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
@@ -195,11 +194,11 @@ public class Spiel extends Canvas implements Runnable {
     }
 
     public void soundAn() {
-        Design.SOUNDAN = true;
+        Konfig.SOUNDAN = true;
         musik.spielen(true);
     }
     public void soundAus() {
-        Design.SOUNDAN = false;
+        Konfig.SOUNDAN = false;
         musik.stoppen();
     }
 
@@ -256,7 +255,7 @@ public class Spiel extends Canvas implements Runnable {
     public void run() {
         this.requestFocus();
         long letztZeit = System.nanoTime();
-        double tickAnzahl = FPS;
+        double tickAnzahl = Konfig.FPS;
         double ns = 1000000000 / tickAnzahl;
         double delta = 0.0;
         long uhr = System.currentTimeMillis();

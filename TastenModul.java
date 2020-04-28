@@ -22,7 +22,7 @@ public class TastenModul extends KeyAdapter {
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
 		if (taste == 83) {
-			if (Design.SOUNDAN) {
+			if (Konfig.SOUNDAN) {
 				spiel.soundAus();
 				spiel.nachrichten.schicken("Sound is now off", Nachricht.Typ.Normal);
 			}

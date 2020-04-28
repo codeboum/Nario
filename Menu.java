@@ -4,7 +4,7 @@ import java.awt.Graphics;
 // Verwaltet alle Menu-Bildschirme
 // Erbt von Design, da viel darauf zugegriffen wird und man damit Design. in der Notation spart
 
-public class Menu extends Design {
+public class Menu extends Konfig {
 	private Spiel spiel;
 	private String aktuellerText, cursor;
 	private int cursorIndex;
@@ -89,8 +89,6 @@ public class Menu extends Design {
 	// Validiert Texteingabe und startet Spiel, falls admin true ist wird auf den admincode getestet
 	public void eingabeEnde(boolean admin) {
 		if (admin) {
-			System.out.println("\""+aktuellerText+"\" getestet auf \""+ADMINCODE+"\"");
-			System.out.println(aktuellerText.equals(ADMINCODE));
 			if (aktuellerText.equals(ADMINCODE)) {
 				spiel.adminModusAktivieren();
 				spiel.nachrichten.schicken("Admin Mode activated!", Nachricht.Typ.Normal);

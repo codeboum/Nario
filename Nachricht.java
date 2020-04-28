@@ -19,13 +19,13 @@ public class Nachricht {
 		this.text = text;
 		this.typ = typ;
 		if (text.length() > 100) text = text.substring(0, 100);
-		zeit = (int) (sekunden * Spiel.FPS);
+		zeit = (int) (sekunden * Konfig.FPS);
 	}
 	public Nachricht(String text, Typ typ) {
 		this.text = text;
 		this.typ = typ;
 		if (text.length() > 100) text = text.substring(0, 100);
-		zeit = (int) (5 * Spiel.FPS);
+		zeit = (int) (5 * Konfig.FPS);
 	}
 
 	// Regelt, dass die Nachrichten wieder verschwinden
@@ -42,13 +42,13 @@ public class Nachricht {
 		Color farbe;
 		switch (typ) {
 			case Warnung:
-				farbe = Design.ROT;
+				farbe = Konfig.ROT;
 				break;
 			default:
-				farbe = Design.WEISS;
+				farbe = Konfig.WEISS;
 		}
 		gfx.setColor(farbe);
-		gfx.setFont(Design.TEXT14);
+		gfx.setFont(Konfig.TEXT14);
 		gfx.drawString(text, 5, Leiste.HOEHE + 16 * (index+1));
 	}
 

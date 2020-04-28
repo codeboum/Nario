@@ -22,8 +22,8 @@ public class Spieler extends SpielObjekt {
     }
 
     public void render(Graphics gfx) {
-        gfx.setFont(Design.TEXT36);
-        gfx.setColor(Design.SCHWARZ);
+        gfx.setFont(Konfig.TEXT36);
+        gfx.setColor(Konfig.SCHWARZ);
         gfx.drawString(name, pos.ix() + 30, pos.iy());
         gfx.drawImage(bildStand, pos.ix(), pos.iy(), null);
     }
