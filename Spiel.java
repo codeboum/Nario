@@ -45,6 +45,8 @@ public class Spiel extends Canvas implements Runnable {
         Vek2 bildschirm = new Vek2(b);
         
         BufferedImage narioStand = null;
+        BufferedImage narioStandSprung = null;
+        BufferedImage narioLaufSprung = null;
         Animation narioLauf = new Animation(new LinkedList<BufferedImage>(), new Vek2(), 8);
         BildLader bildLader = new BildLader(); try {
             // Hier werden Bilder geladen
@@ -53,11 +55,13 @@ public class Spiel extends Canvas implements Runnable {
             hintergrund = new BufferedImage(bildschirm.ix(), bildschirm.iy(), 1);
             hintergrund.getGraphics().drawImage(geScaled, 0, 0, null);
             narioStand = bildLader.laden("\\res\\Nario_Stand.png");
+            narioStandSprung = bildLader.laden("\\res\\Nario_Stand_Sprung.png");
+            narioLaufSprung = bildLader.laden("\\res\\Nario_Lauf_Sprung.png");
             LinkedList<BufferedImage> narioLaufBilder = new LinkedList<BufferedImage>();
             for(int i = 0; i < 8; i++) {
                 narioLaufBilder.add(bildLader.laden("\\res\\Nario_Lauf_"+i+".png"));
             }
-            narioLauf = new Animation(narioLaufBilder, new Vek2(80, 100), 8);
+            narioLauf = new Animation(narioLaufBilder, new Vek2(160, 224), 8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,7 +84,7 @@ public class Spiel extends Canvas implements Runnable {
         addMouseListener(new MausModul(this));   // Ein MausModul wird als MouseListener hinzugefügt
 
 
-        spieler = new Spieler(bildschirm, narioLauf, narioStand, "");
+        spieler = new Spieler(bildschirm, narioLauf, narioStand, narioStandSprung, narioLaufSprung, "");
         String levelDaten = dateiModul.laden("\\levels\\level1.txt");
         level = new Level(levelDaten);
 

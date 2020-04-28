@@ -54,4 +54,9 @@ public class Animation {
 			if (index >= anzahl) index = 0;
 		}
 	}
+
+	public void reset() {
+		index = 0;
+		fpsIndex = 0;
+	}
 }

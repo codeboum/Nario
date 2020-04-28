@@ -30,6 +30,7 @@ public class TastenModul extends KeyAdapter {
 				spiel.soundAn();
 				spiel.nachrichten.schicken("Sound is now on", Nachricht.Typ.Normal);
 			}
+			return;
 		}
 		if (status == Spiel.Status.InGame || status == Spiel.Status.Pausiert) {
 			switch (taste) {
@@ -44,16 +45,24 @@ public class TastenModul extends KeyAdapter {
 				case 80:   // P
 					if (status == Spiel.Status.InGame) spiel.pausiert();
 					else spiel.inGame();
+					return;
+			}
+			if (status == Spiel.Status.InGame) {
+				switch (taste) {
+					case KeyEvent.VK_SPACE:
+						spiel.spieler.sprung();
+						return;
+				}
 			}
 		}
 		if (status == Spiel.Status.HauptMenu) {
 			switch (taste) {
 				case 49:
 					spiel.benutzerLogin();
-					break;
+					return;
 				case 50:
 					spiel.adminLogin();
-					break;
+					return;
 				case 51:
 				case KeyEvent.VK_ESCAPE:
 					spiel.beenden();
@@ -64,15 +73,15 @@ public class TastenModul extends KeyAdapter {
 			switch (taste) {
 				case 49:
 					spiel.inGame();
-					break;
+					return;
 				case 50:
 					spiel.adminModusBeenden();
 					spiel.nachrichten.schicken("Logged out of Admin Mode", Nachricht.Typ.Normal);
 					spiel.hauptMenu();
-					break;
+					return;
 				case 51:
 					spiel.nachrichten.schicken("Not implemented", Nachricht.Typ.Normal);
-					break;
+					return;
 				case 52:
 				case KeyEvent.VK_ESCAPE:
 					spiel.beenden();
@@ -103,6 +112,7 @@ public class TastenModul extends KeyAdapter {
 			}
 			else if (taste != 16) {
 				spiel.nachrichten.schicken("Please only enter Letters, Numbers or hyphens/underscores", Nachricht.Typ.Warnung);
+				return;
 			}
 		}
 	}
