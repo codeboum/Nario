@@ -6,11 +6,11 @@ import java.util.LinkedList;
 // Beinhaltet LinkedList welche alle Objekte enthält
 // Die Hauptaufgabe der Klasse ist, auf allen SpielObjekten tick() und render() aufzurufen
 
-public class ObjektManager {
+public class Level {
 	LinkedList<SpielObjekt> objekte;   // Beinhaltet SpielObjekte
 	boolean habenSpieler;
 
-	public ObjektManager() {
+	public Level() {
 		objekte = new LinkedList<SpielObjekt>();
 		habenSpieler = false;
 	}
@@ -40,7 +40,7 @@ public class ObjektManager {
 	}
 
 	// Ruft tick() auf allen Objekten auf
-	public void tick() {
+	public void tick(Spieler spieler) {
 		for (SpielObjekt obj : objekte) {
 			obj.tick();
 		}
