@@ -22,6 +22,8 @@ public class NachrichtenManager {
 		liste.add(neu);
 	}
 
+	public void schicken(String n, Nachricht.Typ typ) { schicken(new Nachricht(n, typ)); }
+
 	// Entfernen der Nachrichten nach einer gewissen Zeit vom Bildschirm 
 	public void tick() {
 		for (Nachricht n : liste) {
