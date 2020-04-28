@@ -7,23 +7,36 @@ import javax.sound.sampled.Clip;
 
 // Spielt Audiodateien ab, optional mit Endloschleife
 
-public class TonSpieler {
-	public void spielen(String dateiPfad, boolean schleife) {
-		try {
-			File datei = new File(Paths.get(System.getProperty("user.dir")) + dateiPfad);
+public class Ton {
+	File datei;
+	Clip clip;
 
+	public Ton(String dateiPfad) {
+		try {
+			datei = new File(Paths.get(System.getProperty("user.dir")) + dateiPfad);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void spielen(boolean schleife) {
+		try {
 			if (datei.exists()) {
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(datei);
-				Clip clip = AudioSystem.getClip();
+				clip = AudioSystem.getClip();
 				clip.open(audioInput);
 				clip.start();
 				if (schleife) clip.loop(Clip.LOOP_CONTINUOUSLY);
 			}
 			else {
-				System.out.println("Audiodatei konnte nicht gefunden werden. Pfad: " + dateiPfad);
+				System.out.println("Audiodatei konnte nicht gefunden werden. Pfad: " + datei.getPath());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void stoppen() {
+		clip.close();
 	}
 }
