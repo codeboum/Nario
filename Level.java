@@ -52,7 +52,7 @@ public class Level {
 				spieler.stand();
 				spieler.lauf();
 			}
-			spieler.setzPos(new Vek2(sdim.x, boden-sdim.y));
+			spieler.setzPos(new Vek2(spos.x, boden-sdim.y));
 			spieler.setzV(new Vek2(spieler.gibV().x, 0));
 		}
 	}
