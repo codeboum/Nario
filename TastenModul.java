@@ -21,7 +21,7 @@ public class TastenModul extends KeyAdapter {
 		if (admin) System.out.println("Taste " + taste + " angeschlagen");
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
-		if (taste == 83) {
+		if (taste == 83 && status != Spiel.Status.BenutzerLogin && status != Spiel.Status.AdminLogin) {
 			if (Konfig.SOUNDAN) {
 				spiel.soundAus();
 				spiel.nachrichten.schicken("Sound is now off", Nachricht.Typ.Normal);

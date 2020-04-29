@@ -11,7 +11,7 @@ public class Level {
 	LinkedList<SpielObjekt> objekte;   // Beinhaltet SpielObjekte
 
 	// temporär
-	double boden = 790.0;
+	double boden = 850.0;
 
 	public Level(String daten) {
 		titel = "PLACEHOLDER";
@@ -45,8 +45,13 @@ public class Level {
 		Vek2 sdim = spieler.gibDim();
 		if (spos.y + sdim.y > boden) {
 			Spieler.Status s = spieler.gibStatus();
-			if (s == Spieler.Status.StandSprung) spieler.stand();
-			else if (s == Spieler.Status.LaufSprung) spieler.stand(); spieler.lauf();
+			if (s == Spieler.Status.StandSprung) {
+				spieler.stand();
+			}
+			else if (s == Spieler.Status.LaufSprung) {
+				spieler.stand();
+				spieler.lauf();
+			}
 			spieler.setzPos(new Vek2(sdim.x, boden-sdim.y));
 			spieler.setzV(new Vek2(spieler.gibV().x, 0));
 		}
