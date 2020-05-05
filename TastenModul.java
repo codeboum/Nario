@@ -67,6 +67,19 @@ public class TastenModul extends KeyAdapter {
 				case KeyEvent.VK_ESCAPE:
 					spiel.beenden();
 					return;
+				case 52:
+					spiel.highscore();
+					return;
+			}
+		}
+		else if (status == Spiel.Status.Highscore) {
+			switch (taste) {
+				case 49:
+					spiel.highscore();
+					return;
+				case 50:
+					spiel.hauptMenu();
+					return;
 			}
 		}
 		else if (status == Spiel.Status.AdminMenu) {

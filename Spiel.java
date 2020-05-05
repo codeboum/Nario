@@ -103,6 +103,7 @@ public class Spiel extends Canvas implements Runnable {
             case Pausiert:
                 break;
             case HauptMenu:
+            case Highscore:
             case AdminMenu:
                 break;
             case BenutzerLogin:
@@ -139,6 +140,7 @@ public class Spiel extends Canvas implements Runnable {
                 level.render(gfx);
                 spieler.render(gfx);
             case HauptMenu:
+            case Highscore:
             case AdminMenu:
             case BenutzerLogin:
             case AdminLogin:
@@ -170,6 +172,10 @@ public class Spiel extends Canvas implements Runnable {
     }
     public void hauptMenu() {
         status = Status.HauptMenu;
+        this.requestFocus();
+    }
+    public void highscore() {
+        status = Status.Highscore;
         this.requestFocus();
     }
     public void adminMenu() {
@@ -222,6 +228,7 @@ public class Spiel extends Canvas implements Runnable {
         InGame,
         Pausiert,
         HauptMenu,
+        Highscore,
         AdminMenu,
         BenutzerLogin,
         AdminLogin;

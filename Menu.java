@@ -36,6 +36,14 @@ public class Menu extends Konfig {
 				gfx.drawString("1 - Play", 100, 140);
 				gfx.drawString("2 - Login as Admin", 100, 180);
 				gfx.drawString("3 - Close Game", 100, 220);
+				gfx.drawString("4 - Highscore", 100, 260);
+				break;
+			case Highscore:
+				gfx.setColor(WEISS);
+				gfx.setFont(TEXT36);
+				gfx.drawString("Highscore", 100, 100);
+				gfx.drawString("1 - Update", 100, 140);
+				gfx.drawString("2 - Exit to the Menu", 100, 180);
 				break;
 			case AdminMenu:
 				gfx.setColor(WEISS);

@@ -14,7 +14,7 @@ public class Level {
 	double boden = 850.0;
 
 	public Level(String daten) {
-		titel = "PLACEHOLDER";
+		titel = "Work in Progress";
 		objekte = new LinkedList<SpielObjekt>();
 	}
 
@@ -52,7 +52,7 @@ public class Level {
 				spieler.stand();
 				spieler.lauf();
 			}
-			spieler.setzPos(new Vek2(spos.x, boden-sdim.y));
+			spieler.setzPos(new Vek2(sdim.x, boden-sdim.y));
 			spieler.setzV(new Vek2(spieler.gibV().x, 0));
 		}
 	}
