@@ -77,7 +77,7 @@ public class TastenModul extends KeyAdapter {
 				case 49:
 					// placeholder
 					return;
-				case 50:
+				case KeyEvent.VK_ESCAPE:
 					spiel.hauptMenu();
 					return;
 			}

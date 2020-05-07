@@ -50,8 +50,8 @@ public class Menu extends Konfig {
 				gfx.setFont(TEXT36);
 				gfx.drawString("Test Menu", 100, 100);
 				gfx.drawString("1 - Test", 100, 140);
-				gfx.drawString("2 - Edit Highscores", 100, 220);
-				gfx.drawString("ESC - Back to Main Menu", 100, 260);
+				gfx.drawString("2 - Edit Highscores", 100, 180);
+				gfx.drawString("ESC - Back to Main Menu", 100, 220);
 				break;
 			case BenutzerLogin:
 				gfx.setColor(WEISS);

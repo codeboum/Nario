@@ -240,6 +240,7 @@ public class Spiel extends Canvas implements Runnable {
         laufend = true;
         this.requestFocus();
         musik.spielen(true);
+        if (!Konfig.SOUNDAN) soundAus();
         // Vorübergehend
         testModusAktivieren();
 		testMenu();

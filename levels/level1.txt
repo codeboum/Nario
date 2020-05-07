@@ -1,5 +1,13 @@
-{
-	titel: "Level 1",
-	boden-hoehe: 4,
-	boden-typ: "erde"
-}
+[Titel] TestLevel
+[Highscores]
+
+
+
+
+
+
+
+
+
+
+[LevelDaten]

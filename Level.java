@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.util.LinkedList;
+import kompositum.*;
 
 
 // Verwaltet alle SpielObjekte
@@ -14,7 +15,10 @@ public class Level {
 	double boden = 850.0;
 
 	public Level(String daten) {
-		titel = "Work in Progress";
+		Liste levelDaten = levelDatenKonvertieren(daten);
+		System.out.println("Leveldaten geladen");
+		
+		titel = levelDaten.gib(0).string().substring(8);
 		objekte = new LinkedList<SpielObjekt>();
 	}
 
@@ -64,4 +68,23 @@ public class Level {
 	}
 
 	public String gibTitel() { return titel; }
+
+	private Liste levelDatenKonvertieren(String daten) {
+		Liste liste = new Liste();
+
+		boolean fertig = false;
+		do {
+			int zeilenEnde = daten.indexOf("\n");
+			if (zeilenEnde == -1) {
+				liste.adden(new LevelDatenElement(daten));
+				fertig = true;
+			}
+			else {
+				liste.adden(new LevelDatenElement(daten.substring(0, zeilenEnde)));
+				daten = daten.substring(zeilenEnde+1);
+			}
+		} while (!fertig);
+
+		return liste;
+	}
 }
