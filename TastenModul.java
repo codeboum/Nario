@@ -16,7 +16,7 @@ public class TastenModul extends KeyAdapter {
 	public void keyPressed(KeyEvent evt) {
 		int taste = evt.getKeyCode();   // Taste, die betätigt wurde
 		Spiel.Status status = spiel.gibStatus();
-		boolean admin = spiel.adminModusAktiv();
+		boolean admin = spiel.testModusAktiv();
 
 		if (admin) System.out.println("Taste " + taste + " angeschlagen");
 
@@ -39,7 +39,7 @@ public class TastenModul extends KeyAdapter {
 						spiel.hauptMenu();
 					}
 					else {
-						spiel.adminMenu();
+						spiel.testMenu();
 					}
 					return;
 				case 80:   // P
@@ -64,40 +64,36 @@ public class TastenModul extends KeyAdapter {
 					spiel.adminLogin();
 					return;
 				case 51:
-				case KeyEvent.VK_ESCAPE:
-					spiel.beenden();
+					spiel.highscore();
 					return;
 				case 52:
-					spiel.highscore();
+				case KeyEvent.VK_ESCAPE:
+					spiel.beenden();
 					return;
 			}
 		}
 		else if (status == Spiel.Status.Highscore) {
 			switch (taste) {
 				case 49:
-					spiel.highscore();
+					// placeholder
 					return;
 				case 50:
 					spiel.hauptMenu();
 					return;
 			}
 		}
-		else if (status == Spiel.Status.AdminMenu) {
+		else if (status == Spiel.Status.TestMenu) {
 			switch (taste) {
 				case 49:
 					spiel.inGame();
 					return;
 				case 50:
-					spiel.adminModusBeenden();
-					spiel.nachrichten.schicken("Logged out of Admin Mode", Nachricht.Typ.Normal);
-					spiel.hauptMenu();
-					return;
-				case 51:
 					spiel.nachrichten.schicken("Not implemented", Nachricht.Typ.Normal);
 					return;
-				case 52:
 				case KeyEvent.VK_ESCAPE:
-					spiel.beenden();
+					spiel.testModusBeenden();
+					spiel.nachrichten.schicken("Logged out of Test Mode", Nachricht.Typ.Normal);
+					spiel.hauptMenu();
 					return;
 			}
 		}

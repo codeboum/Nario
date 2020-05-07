@@ -17,7 +17,7 @@ public class MausModul extends MouseAdapter {
 		Vek2 dim = spiel.gibDim();   // Dimension der Zeichenfläche
 		int taste = evt.getButton();   // Gedrückte Maustaste
 
-		if (spiel.adminModusAktiv()) System.out.println("Maustaste " + taste + " betaetigt");
+		if (spiel.testModusAktiv()) System.out.println("Maustaste " + taste + " betaetigt");
 
 		// Linksklick
 		if (taste == MouseEvent.BUTTON1) {

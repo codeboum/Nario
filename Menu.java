@@ -27,32 +27,31 @@ public class Menu extends Konfig {
 				gfx.setFont(TEXT36);
 				gfx.drawString("Pause Menu", 100, 100);
 				gfx.drawString("P - Resume Game", 100, 140);
-				gfx.drawString("ESC - Exit to Menu", 100, 180);
+				gfx.drawString("ESC - Back to Main Menu", 100, 180);
 				break;
 			case HauptMenu:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
 				gfx.drawString("Main Menu", 100, 100);
 				gfx.drawString("1 - Play", 100, 140);
-				gfx.drawString("2 - Login as Admin", 100, 180);
-				gfx.drawString("3 - Close Game", 100, 220);
-				gfx.drawString("4 - Highscore", 100, 260);
+				gfx.drawString("2 - Enter Test Mode", 100, 180);
+				gfx.drawString("3 - Highscores", 100, 220);
+				gfx.drawString("4 - Close Game", 100, 260);
 				break;
 			case Highscore:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
-				gfx.drawString("Highscore", 100, 100);
-				gfx.drawString("1 - Update", 100, 140);
-				gfx.drawString("2 - Exit to the Menu", 100, 180);
+				gfx.drawString("Highscores", 100, 100);
+				gfx.drawString("1 - Placeholder", 100, 140);
+				gfx.drawString("ESC - Back to Main Menu", 100, 180);
 				break;
-			case AdminMenu:
+			case TestMenu:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
-				gfx.drawString("Admin Menu", 100, 100);
-				gfx.drawString("1 - Play", 100, 140);
-				gfx.drawString("2 - Logout of Admin Mode", 100, 180);
-				gfx.drawString("3 - Edit Highscores", 100, 220);
-				gfx.drawString("4 - Close Game", 100, 260);
+				gfx.drawString("Test Menu", 100, 100);
+				gfx.drawString("1 - Test", 100, 140);
+				gfx.drawString("2 - Edit Highscores", 100, 220);
+				gfx.drawString("ESC - Back to Main Menu", 100, 260);
 				break;
 			case BenutzerLogin:
 				gfx.setColor(WEISS);
@@ -64,7 +63,7 @@ public class Menu extends Konfig {
 			case AdminLogin:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
-				gfx.drawString("Enter Admin Code", x/2-250, y/2-30);
+				gfx.drawString("Enter Test Mode Code", x/2-250, y/2-30);
 				gfx.drawRect(x/2-250, y/2-25, 500, 50);
 				gfx.drawString(aktuellerText + cursor, x/2-245, y/2+12);
 				break;
@@ -97,13 +96,13 @@ public class Menu extends Konfig {
 	// Validiert Texteingabe und startet Spiel, falls admin true ist wird auf den admincode getestet
 	public void eingabeEnde(boolean admin) {
 		if (admin) {
-			if (aktuellerText.equals(ADMINCODE)) {
-				spiel.adminModusAktivieren();
-				spiel.nachrichten.schicken("Admin Mode activated!", Nachricht.Typ.Normal);
-				spiel.adminMenu();
+			if (aktuellerText.equals(TESTCODE)) {
+				spiel.testModusAktivieren();
+				spiel.nachrichten.schicken("Test Mode activated!", Nachricht.Typ.Normal);
+				spiel.testMenu();
 			}
 			else {
-				spiel.nachrichten.schicken("Invalid Admin Code!", Nachricht.Typ.Warnung);
+				spiel.nachrichten.schicken("Invalid Test Mode Code!", Nachricht.Typ.Warnung);
 				spiel.hauptMenu();
 			}
 		}

@@ -12,7 +12,7 @@ public class Anzeige extends Konfig {
 	}
 
 	public void render(Graphics gfx, Vek2 dim) {
-		if (!spiel.adminModusAktiv()) return;
+		if (!spiel.testModusAktiv()) return;
 
 		// Debug Anzeige - FPS, Level
 		gfx.setColor(WEISS);

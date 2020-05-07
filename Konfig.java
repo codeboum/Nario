@@ -6,11 +6,11 @@ import java.awt.Font;
 
 public abstract class Konfig {
 	public static final String TITEL = "NARIO";
-	public static final String ADMINCODE = "narioadmin";
+	public static final String TESTCODE = "nariotest";
 	public static String       CURSOR = "_";
 	public static final int    MAXNAMELAENGE = 20;
 	public static final double FPS = 60.0;
-	public static boolean      SOUNDAN = true;
+	public static boolean      SOUNDAN = false;
 	public static final Color  WEISS = Color.WHITE;
 	public static final Color  HELLGRAU = Color.LIGHT_GRAY;
 	public static final Color  SCHWARZ = Color.BLACK;

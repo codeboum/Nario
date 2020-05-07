@@ -20,7 +20,7 @@ public class Spiel extends Canvas implements Runnable {
     private Thread thread;   // Thread, in dem die Game-Loop des Spiels läuft
     private boolean laufend;   // ob der Thread läuft
 
-    private boolean adminModus;
+    private boolean testModus;
     private Status status;
     private int fps;   // Speichert FPS, wird in der Game-Loop einmal pro Sekunde aktualisiert
 
@@ -68,7 +68,7 @@ public class Spiel extends Canvas implements Runnable {
         musik = new Ton("\\res\\Nario.wav");
 
         laufend = false;
-        adminModus = false;
+        testModus = false;
         status = Status.HauptMenu;
         fps = 0;
 
@@ -104,7 +104,7 @@ public class Spiel extends Canvas implements Runnable {
                 break;
             case HauptMenu:
             case Highscore:
-            case AdminMenu:
+            case TestMenu:
                 break;
             case BenutzerLogin:
             case AdminLogin:
@@ -141,7 +141,7 @@ public class Spiel extends Canvas implements Runnable {
                 spieler.render(gfx);
             case HauptMenu:
             case Highscore:
-            case AdminMenu:
+            case TestMenu:
             case BenutzerLogin:
             case AdminLogin:
                 gfx.setColor(new Color(0, 0, 0, 150));
@@ -178,8 +178,8 @@ public class Spiel extends Canvas implements Runnable {
         status = Status.Highscore;
         this.requestFocus();
     }
-    public void adminMenu() {
-        status = Status.AdminMenu;
+    public void testMenu() {
+        status = Status.TestMenu;
         this.requestFocus();
     }
     public void benutzerLogin() {
@@ -193,14 +193,12 @@ public class Spiel extends Canvas implements Runnable {
         this.requestFocus();
     }
 
-    public boolean adminModusAktiv() { return adminModus; }
-    public void adminModusAktivieren() {
-        adminModus = true;
-        spieler.setzName("ADMIN");
+    public boolean testModusAktiv() { return testModus; }
+    public void testModusAktivieren() {
+        testModus = true;
     }
-    public void adminModusBeenden() {
-        adminModus = false;
-        spieler.setzName("");
+    public void testModusBeenden() {
+        testModus = false;
     }
 
     public void soundAn() {
@@ -229,7 +227,7 @@ public class Spiel extends Canvas implements Runnable {
         Pausiert,
         HauptMenu,
         Highscore,
-        AdminMenu,
+        TestMenu,
         BenutzerLogin,
         AdminLogin;
     }
@@ -243,8 +241,8 @@ public class Spiel extends Canvas implements Runnable {
         this.requestFocus();
         musik.spielen(true);
         // Vorübergehend
-        adminModusAktivieren();
-		adminMenu();
+        testModusAktivieren();
+		testMenu();
     }
 
     // Beendet den Thread
