@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 
 
 // Verwaltet die Anzeige von Spiel-Parametern - Level, Punkte, usw
@@ -12,6 +13,15 @@ public class Anzeige extends Konfig {
 	}
 
 	public void render(Graphics gfx, Vek2 dim) {
+		if (spiel.gibStatus() == Spiel.Status.InGame) {
+			double lebenDouble = spiel.spieler.gibLeben() * (255.0/(double) MAXLEBEN);
+			int l = (int) lebenDouble;
+			gfx.setColor(new Color(255-l, l, l/4));
+			gfx.fillRect(20, 50, spiel.spieler.gibLeben()*2, 40);
+			gfx.setColor(WEISS);
+			gfx.drawRect(20, 50, (MAXLEBEN*2)-1, 39);
+		}
+
 		if (!spiel.testModusAktiv()) return;
 
 		// Debug Anzeige - FPS, Level

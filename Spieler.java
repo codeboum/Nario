@@ -10,6 +10,7 @@ public class Spieler extends SpielObjekt {
     private Animation animation;
     private BufferedImage bildStand, bildStandSprung, bildLaufSprung;
     private String name;
+    private int leben;
 
 
     public Spieler(Vek2 bildschirm, Animation animation, BufferedImage bildStand, BufferedImage bildStandSprung, BufferedImage bildLaufSprung, String name) {
@@ -20,6 +21,7 @@ public class Spieler extends SpielObjekt {
         this.bildStandSprung = bildStandSprung;
         this.bildLaufSprung = bildLaufSprung;
         this.name = name;
+        leben = Konfig.MAXLEBEN;
     }
 
     public enum Status {
@@ -41,7 +43,15 @@ public class Spieler extends SpielObjekt {
         if (status == Status.Stand) status = Status.StandSprung;
         else if (status == Status.Lauf) status = Status.LaufSprung;
         v = new Vek2(v.x, v.y -= 25.0);
+    }
 
+    public void setzLeben(int l) {
+        if (l < 0 || l > Konfig.MAXLEBEN) return;
+        leben = l;
+    }
+    public void addLeben(int i) {
+        if (leben+i < 0 || leben+i > Konfig.MAXLEBEN) return;
+        leben += i;
     }
 
     public void tick() {
@@ -75,4 +85,5 @@ public class Spieler extends SpielObjekt {
     public void setzName(String n) { this.name = n; }
     public String gibName() { return name; }
     public Status gibStatus() { return status; }
+    public int gibLeben() { return leben; }
 }

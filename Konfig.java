@@ -9,6 +9,7 @@ public abstract class Konfig {
 	public static final String TESTCODE = "nariotest";
 	public static String       CURSOR = "_";
 	public static final int    MAXNAMELAENGE = 20;
+	public static final int    MAXLEBEN = 100;
 	public static final double FPS = 60.0;
 	public static boolean      SOUNDAN = false;
 	public static final Color  WEISS = Color.WHITE;
