@@ -53,14 +53,14 @@ public class Menu extends Konfig {
 				gfx.drawString("2 - Edit Highscores", 100, 180);
 				gfx.drawString("ESC - Back to Main Menu", 100, 220);
 				break;
-			case BenutzerLogin:
+			case NamenEingabe:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
 				gfx.drawString("Enter a Name", x/2-250, y/2-30);
 				gfx.drawRect(x/2-250, y/2-25, 500, 50);
 				gfx.drawString(aktuellerText + cursor, x/2-245, y/2+12);
 				break;
-			case AdminLogin:
+			case TestLogin:
 				gfx.setColor(WEISS);
 				gfx.setFont(TEXT36);
 				gfx.drawString("Enter Test Mode Code", x/2-250, y/2-30);
@@ -93,9 +93,9 @@ public class Menu extends Konfig {
 		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);
 	}
 
-	// Validiert Texteingabe und startet Spiel, falls admin true ist wird auf den admincode getestet
-	public void eingabeEnde(boolean admin) {
-		if (admin) {
+	// Validiert Texteingabe und startet Spiel, falls testModus true ist wird auf den testcode getestet
+	public void eingabeEnde(boolean testModus) {
+		if (testModus) {
 			if (aktuellerText.equals(TESTCODE)) {
 				spiel.testModusAktivieren();
 				spiel.nachrichten.schicken("Test Mode activated!", Nachricht.Typ.Normal);
@@ -111,7 +111,6 @@ public class Menu extends Konfig {
 				spiel.nachrichten.schicken("The Name cannot be empty!", Nachricht.Typ.Warnung);
 			}
 			else {
-				spiel.spieler.setzName(aktuellerText);
 				spiel.inGame();
 			}
 		}

@@ -17,9 +17,15 @@ public class Anzeige extends Konfig {
 			double lebenDouble = spiel.spieler.gibLeben() * (255.0/(double) MAXLEBEN);
 			int l = (int) lebenDouble;
 			gfx.setColor(new Color(255-l, l, l/4));
-			gfx.fillRect(20, 50, spiel.spieler.gibLeben()*2, 40);
+			gfx.fillRect(20, 50, spiel.spieler.gibLeben()*2, 35);
 			gfx.setColor(WEISS);
-			gfx.drawRect(20, 50, (MAXLEBEN*2)-1, 39);
+			gfx.drawRect(20, 50, (MAXLEBEN*2)-1, 34);
+
+			gfx.setFont(TEXT14);
+			gfx.drawString("Score", 230, 62);
+			gfx.setColor(GELB);
+			gfx.setFont(TEXT18);
+			gfx.drawString(spiel.punkte+"", 230, 82);
 		}
 
 		if (!spiel.testModusAktiv()) return;

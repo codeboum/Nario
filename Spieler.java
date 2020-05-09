@@ -81,8 +81,7 @@ public class Spieler extends SpielObjekt {
                 gfx.drawImage(bildLaufSprung, pos.ix(), pos.iy(), null);
         }
     }
-
-    public void setzName(String n) { this.name = n; }
+    
     public String gibName() { return name; }
     public Status gibStatus() { return status; }
     public int gibLeben() { return leben; }

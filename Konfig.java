@@ -6,7 +6,7 @@ import java.awt.Font;
 
 public abstract class Konfig {
 	public static final String TITEL = "NARIO";
-	public static final String TESTCODE = "nariotest";
+	public static final String TESTCODE = "";
 	public static String       CURSOR = "_";
 	public static final int    MAXNAMELAENGE = 20;
 	public static final int    MAXLEBEN = 100;

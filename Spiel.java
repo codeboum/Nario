@@ -36,6 +36,8 @@ public class Spiel extends Canvas implements Runnable {
     public  Spieler spieler;
     public  Level level;
 
+    public int punkte;
+
     BufferedImage hintergrund;
     Ton musik;
 
@@ -87,7 +89,7 @@ public class Spiel extends Canvas implements Runnable {
         spieler = new Spieler(bildschirm, narioLauf, narioStand, narioStandSprung, narioLaufSprung, "");
         String levelDaten = dateiModul.laden("\\levels\\level1.txt");
         level = new Level(levelDaten);
-
+        punkte = 0;
 
         new Fenster(this);   // Im Konstruktor des Fensters wird starten() aufgerufen, was dann den Thread startet
     }
@@ -106,8 +108,8 @@ public class Spiel extends Canvas implements Runnable {
             case Highscore:
             case TestMenu:
                 break;
-            case BenutzerLogin:
-            case AdminLogin:
+            case NamenEingabe:
+            case TestLogin:
                 menu.cursorTick();
                 break;
         }
@@ -142,8 +144,8 @@ public class Spiel extends Canvas implements Runnable {
             case HauptMenu:
             case Highscore:
             case TestMenu:
-            case BenutzerLogin:
-            case AdminLogin:
+            case NamenEingabe:
+            case TestLogin:
                 gfx.setColor(new Color(0, 0, 0, 150));
                 gfx.fillRect(0, 0, this.getWidth(), this.getHeight());
                 anzeige.render(gfx, gibDim());
@@ -182,14 +184,14 @@ public class Spiel extends Canvas implements Runnable {
         status = Status.TestMenu;
         this.requestFocus();
     }
-    public void benutzerLogin() {
+    public void namenEingabe() {
         menu.textInputVorbereiten();
-        status = Status.BenutzerLogin;
+        status = Status.NamenEingabe;
         this.requestFocus();
     }
-    public void adminLogin() {
+    public void testLogin() {
         menu.textInputVorbereiten();
-        status = Status.AdminLogin;
+        status = Status.TestLogin;
         this.requestFocus();
     }
 
@@ -228,8 +230,8 @@ public class Spiel extends Canvas implements Runnable {
         HauptMenu,
         Highscore,
         TestMenu,
-        BenutzerLogin,
-        AdminLogin;
+        NamenEingabe,
+        TestLogin;
     }
 
 

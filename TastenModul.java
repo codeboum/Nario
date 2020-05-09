@@ -21,7 +21,7 @@ public class TastenModul extends KeyAdapter {
 		if (admin) System.out.println("Taste " + taste + " angeschlagen");
 
 		// Je nach Taste werden verschiedene Anweisungen ausgeführt
-		if (taste == 83 && status != Spiel.Status.BenutzerLogin && status != Spiel.Status.AdminLogin) {
+		if (taste == 83 && status != Spiel.Status.NamenEingabe && status != Spiel.Status.TestLogin) {
 			if (Konfig.SOUNDAN) {
 				spiel.soundAus();
 				spiel.nachrichten.schicken("Sound is now off", Nachricht.Typ.Normal);
@@ -58,10 +58,10 @@ public class TastenModul extends KeyAdapter {
 		if (status == Spiel.Status.HauptMenu) {
 			switch (taste) {
 				case 49:
-					spiel.benutzerLogin();
+					spiel.inGame();
 					return;
 				case 50:
-					spiel.adminLogin();
+					spiel.testLogin();
 					return;
 				case 51:
 					spiel.highscore();
@@ -97,7 +97,7 @@ public class TastenModul extends KeyAdapter {
 					return;
 			}
 		}
-		else if (status == Spiel.Status.BenutzerLogin || status == Spiel.Status.AdminLogin) {
+		else if (status == Spiel.Status.NamenEingabe || status == Spiel.Status.TestLogin) {
 			Menu menu = spiel.gibMenu();
 
 			// Verwaltet Textinput-Funktion
@@ -116,7 +116,7 @@ public class TastenModul extends KeyAdapter {
 				return;
 			}
 			else if (taste == 10) {
-				menu.eingabeEnde(status == Spiel.Status.AdminLogin);
+				menu.eingabeEnde(status == Spiel.Status.TestLogin);
 				return;
 			}
 			else if (taste != 16) {
