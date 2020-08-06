@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import kompositum.*;
 
@@ -8,16 +9,25 @@ import kompositum.*;
 
 public class Level {
 	String title;
+	Vec2 screenDim;
+	BufferedImage spriteStone;
 	LinkedList<GameObject> objects;   // Handles GameObjects
 
-	// temporary
-	double ground = 850.0;
+	int groundData;
+	double groundActual;
 
-	public Level(String data) {
+	public Level(String data, Vec2 screenDim, BufferedImage spriteStone) {
 		Liste levelData = convertLevelData(data);
+		this.screenDim = screenDim;
+		this.spriteStone = spriteStone;
 		System.out.println("Level Data loaded");
 		
 		title = levelData.gib(0).string().substring(8);
+		String groundStr = levelData.gib(13).string().substring(7);
+		try {
+			groundData = Integer.parseInt(groundStr);
+			groundActual = screenDim.iy() - (groundData * Config.TILE_SIZE);
+		} catch (Exception e) { e.printStackTrace(); };
 		objects = new LinkedList<GameObject>();
 	}
 
@@ -46,7 +56,7 @@ public class Level {
 
 		Vec2 ppos = player.getPos();
 		Vec2 pdim = player.getDim();
-		if (ppos.y + pdim.y > ground) {
+		if (ppos.y + pdim.y > groundActual) {
 			Player.Status s = player.getStatus();
 			if (s == Player.Status.StandingJump) {
 				player.standing();
@@ -55,13 +65,18 @@ public class Level {
 				player.standing();
 				player.moving();
 			}
-			player.setPos(new Vec2(ppos.x, ground-pdim.y));
+			player.setPos(new Vec2(ppos.x, groundActual-pdim.y));
 			player.setV(new Vec2(player.getV().x, 0));
 		}
 	}
 
 	// Calls render() on all objects
 	public void render(Graphics gfx) {
+		for (int j = 0; j < groundData; j++) {
+			for (int i = 0; i < screenDim.ix(); i++) {
+				gfx.drawImage(spriteStone, i*Config.TILE_SIZE, screenDim.iy()-(j+1)*Config.TILE_SIZE, null);
+			}
+		}
 		for (GameObject obj : objects) {
 			obj.render(gfx);
 		}

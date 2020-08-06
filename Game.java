@@ -48,6 +48,7 @@ public class Game extends Canvas implements Runnable {
         BufferedImage narioStanding = null;
         BufferedImage narioStandingJump = null;
         BufferedImage narioMovingJump = null;
+        BufferedImage spriteStone = null;
         Animation narioRunAnim = new Animation(new LinkedList<BufferedImage>(), new Vec2(), 8);
         ImageLoader imageLoader = new ImageLoader(); try {
             // Images are loaded here
@@ -58,6 +59,7 @@ public class Game extends Canvas implements Runnable {
             narioStanding = imageLoader.load("\\res\\Nario_Stand.png");
             narioStandingJump = imageLoader.load("\\res\\Nario_Stand_Sprung.png");
             narioMovingJump = imageLoader.load("\\res\\Nario_Lauf_Sprung.png");
+            spriteStone = imageLoader.load("\\res\\stone.png");
             LinkedList<BufferedImage> narioRunFrames = new LinkedList<BufferedImage>();
             for(int i = 0; i < 8; i++) {
                 narioRunFrames.add(imageLoader.load("\\res\\Nario_Lauf_"+i+".png"));
@@ -87,7 +89,7 @@ public class Game extends Canvas implements Runnable {
 
         player = new Player(screenDim, narioRunAnim, narioStanding, narioStandingJump, narioMovingJump, "");
         String levelData = dataModule.load("\\levels\\level1.txt");
-        level = new Level(levelData);
+        level = new Level(levelData, screenDim, spriteStone);
         points = 0;
 
         new Window(this);   // Calls launch() in its constructor, which starts the thread

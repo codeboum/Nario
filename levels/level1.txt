@@ -11,3 +11,4 @@
 
 
 [LevelData]
+ground=3

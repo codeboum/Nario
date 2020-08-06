@@ -7,6 +7,7 @@ import java.awt.Font;
 public abstract class Config {
 	public static final String TITLE = "NARIO";
 	public static final String TESTCODE = "";
+	public static final int    TILE_SIZE = 100;
 	public static String       CURSOR = "_";
 	public static final int    MAXNAMELENGTH = 20;
 	public static final int    MAXHEALTH = 100;
