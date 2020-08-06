@@ -2,25 +2,25 @@ import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 
 
-// Implementiert Animation
-// SpielObjekte können Animationsobjekte haben, und diese zum Zeichnen benutzen
+// Implements animation
+// GameObjects can have Animation Objects and use them for rendering
 
 public class Animation {
-	LinkedList<BufferedImage> bilder;
-	int anzahl, index, fps, fpsIndex;   // fps gibt an, wie schnell die Animation läuft
-	Vek2 groesse;   // Groesse der Bilder
+	LinkedList<BufferedImage> frames;
+	int nOfFrames, index, fps, fpsIndex;   // fps is the fps of the animation
+	Vec2 size;   // size of frames
 
-	// Aus dem gegebenen Bild werden in horizontaler Richtung *anzahl* Bilder mit der gegebenen Groesse ausgeschnitten
-	//  und in einer LinkedList gespeichert
-	public Animation(BufferedImage b, int anzahl, Vek2 groesse, int fps) {
-		this.anzahl = anzahl;
-		this.groesse = groesse;
+	// *nOfFrames* Frames of the given size are cut out of the given image in horizontal direction
+	//  and saved in a LinkedList
+	public Animation(BufferedImage b, int nOfFrames, Vec2 size, int fps) {
+		this.nOfFrames = nOfFrames;
+		this.size = size;
 		this.fps = fps;
-		bilder = new LinkedList<BufferedImage>();
+		frames = new LinkedList<BufferedImage>();
 
 		try {
-			for (int i = 0; i < anzahl; i++) {
-				bilder.add(b.getSubimage(i*groesse.ix(), 0, groesse.ix(), groesse.iy()));
+			for (int i = 0; i < nOfFrames; i++) {
+				frames.add(b.getSubimage(i*size.ix(), 0, size.ix(), size.iy()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,29 +29,30 @@ public class Animation {
 		index = 0;
 		fpsIndex = 0;
 	}
-	// Dieser Konstruktor nimmt direkt eine LinkedList mit Bildern und übernimmt diese in die Animation
-	public Animation(LinkedList<BufferedImage> bilder, Vek2 groesse, int fps) {
-		this.anzahl = bilder.size();
-		this.groesse = groesse;
+
+	// This constructor directly takes a LinkedList of Frames
+	public Animation(LinkedList<BufferedImage> frames, Vec2 size, int fps) {
+		this.nOfFrames = frames.size();
+		this.size = size;
 		this.fps = fps;
 
-		this.bilder = bilder;
+		this.frames = frames;
 		
 		index = 0;
 		fpsIndex = 0;
 	}
 
 
-	public BufferedImage bildGeben() {
-		return bilder.get(index);
+	public BufferedImage getCurrentFrame() {
+		return frames.get(index);
 	}
-	// Lässt die Animation voranschreiten
-	public void ticken() {
+	// Ticks the animation
+	public void tick() {
 		fpsIndex++;
 		if (fpsIndex >= 60/fps) {
 			fpsIndex = 0;
 			index++;
-			if (index >= anzahl) index = 0;
+			if (index >= nOfFrames) index = 0;
 		}
 	}
 

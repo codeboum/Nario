@@ -1,4 +1,4 @@
-[Titel] TestLevel
+[Title] TestLevel
 [Highscores]
 
 
@@ -10,4 +10,4 @@
 
 
 
-[LevelDaten]
+[LevelData]

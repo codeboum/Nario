@@ -1,71 +1,60 @@
 import java.awt.Graphics;
 
 
-// Verwaltet alle Menu-Bildschirme
-// Erbt von Design, da viel darauf zugegriffen wird und man damit Design. in der Notation spart
+// Handles all Menu Screens
 
-public class Menu extends Konfig {
-	private Spiel spiel;
-	private String aktuellerText, cursor;
+public class Menu extends Config {
+	private Game game;
+	private String currentText, cursor;
 	private int cursorIndex;
 
-	public Menu(Spiel spiel) {
-		this.spiel = spiel;
-		textInputVorbereiten();
+	public Menu(Game game) {
+		this.game = game;
+		prepareTextInput();
 	}
 
 	public void render(Graphics gfx) {
-		Spiel.Status status = spiel.gibStatus();
-		Vek2 dim = spiel.gibDim();
+		Game.Status status = game.getStatus();
+		Vec2 dim = game.getDim();
 		int x = dim.ix();
 		int y = dim.iy();
 
-		// Zeichnet die verschiedenen Menu-Bildschirme
+		// Renders different Menu Screens
+		gfx.setColor(WHITE);
+		gfx.setFont(TEXT36);
 		switch (status) {
-			case Pausiert:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
+			case Paused:
 				gfx.drawString("Pause Menu", 100, 100);
 				gfx.drawString("P - Resume Game", 100, 140);
 				gfx.drawString("ESC - Back to Main Menu", 100, 180);
 				break;
-			case HauptMenu:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
+			case MainMenu:
 				gfx.drawString("Main Menu", 100, 100);
 				gfx.drawString("1 - Play", 100, 140);
 				gfx.drawString("2 - Enter Test Mode", 100, 180);
 				gfx.drawString("3 - Highscores", 100, 220);
 				gfx.drawString("4 - Close Game", 100, 260);
 				break;
-			case Highscore:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
+			case Highscores:
 				gfx.drawString("Highscores", 100, 100);
 				gfx.drawString("1 - Placeholder", 100, 140);
 				gfx.drawString("ESC - Back to Main Menu", 100, 180);
 				break;
 			case TestMenu:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
 				gfx.drawString("Test Menu", 100, 100);
 				gfx.drawString("1 - Test", 100, 140);
 				gfx.drawString("2 - Edit Highscores", 100, 180);
 				gfx.drawString("ESC - Back to Main Menu", 100, 220);
 				break;
-			case NamenEingabe:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
+			case NamePrompt:
 				gfx.drawString("Enter a Name", x/2-250, y/2-30);
 				gfx.drawRect(x/2-250, y/2-25, 500, 50);
-				gfx.drawString(aktuellerText + cursor, x/2-245, y/2+12);
+				gfx.drawString(currentText + cursor, x/2-245, y/2+12);
 				break;
 			case TestLogin:
-				gfx.setColor(WEISS);
-				gfx.setFont(TEXT36);
 				gfx.drawString("Enter Test Mode Code", x/2-250, y/2-30);
 				gfx.drawRect(x/2-250, y/2-25, 500, 50);
-				gfx.drawString(aktuellerText + cursor, x/2-245, y/2+12);
+				gfx.drawString(currentText + cursor, x/2-245, y/2+12);
 				break;
 			default:
 				break;
@@ -80,46 +69,46 @@ public class Menu extends Konfig {
 		}
 	}
 
-	// Verwaltet Texteingabe
-	public void eingabe(char taste) {
-		if (aktuellerText.length() < MAXNAMELAENGE) {
-			aktuellerText += taste;
+	// Handles Text input
+	public void input(char key) {
+		if (currentText.length() < MAXNAMELENGTH) {
+			currentText += key;
 		}
 		else {
-			spiel.nachrichten.schicken("Name should not be longer than 20 characters", Nachricht.Typ.Warnung);
+			game.notifs.send("Name should not be longer than 20 characters", Notif.Type.Warning);
 		}
 	}
-	public void entf() {
-		if (aktuellerText.length() > 0) aktuellerText = aktuellerText.substring(0, aktuellerText.length()-1);
+	public void del() {
+		if (currentText.length() > 0) currentText = currentText.substring(0, currentText.length()-1);
 	}
 
-	// Validiert Texteingabe und startet Spiel, falls testModus true ist wird auf den testcode getestet
-	public void eingabeEnde(boolean testModus) {
-		if (testModus) {
-			if (aktuellerText.equals(TESTCODE)) {
-				spiel.testModusAktivieren();
-				spiel.nachrichten.schicken("Test Mode activated!", Nachricht.Typ.Normal);
-				spiel.testMenu();
+	// Validates Text input and starts game, in test mode it tests for correct test code
+	public void validateInput(boolean testMode) {
+		if (testMode) {
+			if (currentText.equals(TESTCODE)) {
+				game.activateTestMode();
+				game.notifs.send("Test Mode activated!", Notif.Type.Normal);
+				game.testMenu();
 			}
 			else {
-				spiel.nachrichten.schicken("Invalid Test Mode Code!", Nachricht.Typ.Warnung);
-				spiel.hauptMenu();
+				game.notifs.send("Invalid Test Mode Code!", Notif.Type.Warning);
+				game.mainMenu();
 			}
 		}
 		else {
-			if (aktuellerText.length() == 0) {
-				spiel.nachrichten.schicken("The Name cannot be empty!", Nachricht.Typ.Warnung);
+			if (currentText.length() == 0) {
+				game.notifs.send("The Name cannot be empty!", Notif.Type.Warning);
 			}
 			else {
-				spiel.inGame();
+				game.inGame();
 			}
 		}
-		textInputVorbereiten();
+		prepareTextInput();
 	}
 
-	public void textInputVorbereiten() {
+	public void prepareTextInput() {
 		cursor = CURSOR;
-		aktuellerText = "";
+		currentText = "";
 		cursorIndex = 0;
 	}
 }

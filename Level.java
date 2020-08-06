@@ -3,88 +3,88 @@ import java.util.LinkedList;
 import kompositum.*;
 
 
-// Verwaltet alle SpielObjekte
-// Beinhaltet LinkedList welche alle Objekte enthält
-// Die Hauptaufgabe der Klasse ist, auf allen SpielObjekten tick() und render() aufzurufen
+// Handles current Level with all GameObjects
+// GameObjects are contained within a LinkedList
 
 public class Level {
-	String titel;
-	LinkedList<SpielObjekt> objekte;   // Beinhaltet SpielObjekte
+	String title;
+	LinkedList<GameObject> objects;   // Handles GameObjects
 
-	// temporär
-	double boden = 850.0;
+	// temporary
+	double ground = 850.0;
 
-	public Level(String daten) {
-		Liste levelDaten = levelDatenKonvertieren(daten);
-		System.out.println("Leveldaten geladen");
+	public Level(String data) {
+		Liste levelData = convertLevelData(data);
+		System.out.println("Level Data loaded");
 		
-		titel = levelDaten.gib(0).string().substring(8);
-		objekte = new LinkedList<SpielObjekt>();
+		title = levelData.gib(0).string().substring(8);
+		objects = new LinkedList<GameObject>();
 	}
 
-	// Objekte einfügen
-	public void adden(SpielObjekt obj) {
-		objekte.add(obj);
+	// add object
+	public void add(GameObject obj) {
+		objects.add(obj);
 	}
-	// Objekte entfernen
-	public void entfernen(SpielObjekt obj) { objekte.remove(obj); }
-	// Entfernt alle Objekte, Hilfreich um das Spiel zurückzusetzen, zB zwischen Level
-	public void leeren() {
-		objekte.clear();
+	// remove object
+	public void remove(GameObject obj) { objects.remove(obj); }
+	// clears all objects
+	public void clearObjects() {
+		objects.clear();
 	}
-	// Entfernt alle Objekte ausser eins, hilfreich um zB alle ausser den Spiel zu entfernen
-	public void leerenAusser(SpielObjekt o) {
-		for (SpielObjekt obj : objekte) {
-			if (obj != o) entfernen(obj);
+	// clears all objects except one
+	public void clearObjectsExcept(GameObject o) {
+		for (GameObject obj : objects) {
+			if (obj != o) remove(obj);
 		}
 	}
 
-	// Ruft tick() auf allen Objekten auf
-	public void tick(Spieler spieler) {
-		for (SpielObjekt obj : objekte) {
+	// Calls tick() on all objects
+	public void tick(Player player) {
+		for (GameObject obj : objects) {
 			obj.tick();
 		}
 
-		Vek2 spos = spieler.gibPos();
-		Vek2 sdim = spieler.gibDim();
-		if (spos.y + sdim.y > boden) {
-			Spieler.Status s = spieler.gibStatus();
-			if (s == Spieler.Status.StandSprung) {
-				spieler.stand();
+		Vec2 ppos = player.getPos();
+		Vec2 pdim = player.getDim();
+		if (ppos.y + pdim.y > ground) {
+			Player.Status s = player.getStatus();
+			if (s == Player.Status.StandingJump) {
+				player.standing();
 			}
-			else if (s == Spieler.Status.LaufSprung) {
-				spieler.stand();
-				spieler.lauf();
+			else if (s == Player.Status.MovingJump) {
+				player.standing();
+				player.moving();
 			}
-			spieler.setzPos(new Vek2(spos.x, boden-sdim.y));
-			spieler.setzV(new Vek2(spieler.gibV().x, 0));
+			player.setPos(new Vec2(ppos.x, ground-pdim.y));
+			player.setV(new Vec2(player.getV().x, 0));
 		}
 	}
-	// Ruft render() auf allen Objekten auf
+
+	// Calls render() on all objects
 	public void render(Graphics gfx) {
-		for (SpielObjekt obj : objekte) {
+		for (GameObject obj : objects) {
 			obj.render(gfx);
 		}
 	}
 
-	public String gibTitel() { return titel; }
+	public String getTitle() { return title; }
 
-	private Liste levelDatenKonvertieren(String daten) {
-		Liste liste = new Liste();
+	private Liste convertLevelData(String data) {
+		Liste list = new Liste();
 
-		boolean fertig = false;
+		boolean done = false;
 		do {
-			int zeilenEnde = daten.indexOf("\n");
-			if (zeilenEnde == -1) {
-				liste.adden(new LevelDatenElement(daten));
-				fertig = true;
+			int lineEnd = data.indexOf("\n");
+			if (lineEnd == -1) {
+				list.adden(new LevelDataElement(data));
+				done = true;
 			}
 			else {
-				liste.adden(new LevelDatenElement(daten.substring(0, zeilenEnde)));
-				daten = daten.substring(zeilenEnde+1);
+				list.adden(new LevelDataElement(data.substring(0, lineEnd)));
+				data = data.substring(lineEnd+1);
 			}
-		} while (!fertig);
+		} while (!done);
 
-		return liste;
+		return list;
 	}
 }
