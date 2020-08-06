@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-import kompositum.*;
 
 
 // Handles current Level with all GameObjects
@@ -17,13 +16,13 @@ public class Level {
 	double groundActual;
 
 	public Level(String data, Vec2 screenDim, BufferedImage spriteStone) {
-		Liste levelData = convertLevelData(data);
+		LinkedList<String> levelData = convertLevelData(data);
 		this.screenDim = screenDim;
 		this.spriteStone = spriteStone;
 		System.out.println("Level Data loaded");
 		
-		title = levelData.gib(0).string().substring(8);
-		String groundStr = levelData.gib(13).string().substring(7);
+		title = levelData.get(0).substring(8);
+		String groundStr = levelData.get(13).substring(7);
 		try {
 			groundData = Integer.parseInt(groundStr);
 			groundActual = screenDim.iy() - (groundData * Config.TILE_SIZE);
@@ -84,22 +83,22 @@ public class Level {
 
 	public String getTitle() { return title; }
 
-	private Liste convertLevelData(String data) {
-		Liste list = new Liste();
+	private LinkedList<String> convertLevelData(String data) {
+		LinkedList<String> lines = new LinkedList<String>();
 
 		boolean done = false;
 		do {
 			int lineEnd = data.indexOf("\n");
 			if (lineEnd == -1) {
-				list.adden(new LevelDataElement(data));
+				lines.add(data);
 				done = true;
 			}
 			else {
-				list.adden(new LevelDataElement(data.substring(0, lineEnd)));
+				lines.add(data.substring(0, lineEnd));
 				data = data.substring(lineEnd+1);
 			}
 		} while (!done);
 
-		return list;
+		return lines;
 	}
 }
